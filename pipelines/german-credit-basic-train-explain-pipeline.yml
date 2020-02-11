@@ -6,13 +6,42 @@ pool:
 
 
 variables: { 
-  ml-workspace-connection: 'aml-workspace-connection' ,
+  ml-workspace-connection: 'aml-workspace-connection',
+  ml-workspace-name: 'csamlfsi-ws',
+  ml-workspace-rg: 'csamlfsi-rg',
+  ml-compute-name: 'amlcluster'
 }
 
 steps:
   - task: AzureCLI@2
+    displayName: 'Install AML CLI'
     inputs:
       azureSubscription: $(ml-workspace-connection)
       scriptType: 'bash'
       scriptLocation: 'inlineScript'
-      inlineScript: 'az extension add -n azure-cli-ml'
+      inlineScript: |
+        az extension add -n azure-cli-ml
+
+
+  - task: AzureCLI@2
+    displayName: 'Train and explain model'
+    inputs:
+      azureSubscription: $(ml-workspace-connection)
+      scriptType: 'bash'
+      scriptLocation: 'inlineScript'
+      inlineScript: |
+        az ml run submit-script \
+        --conda-dependencies conda_train.yml \
+        --ct $(ml-compute-name) \
+        --experiment-name german-credit-ci \
+        --output-metadata-file model.json \
+        --path . \
+        --resource-group $(ml-workspace-rg) \
+        --source-directory . \
+        --workspace-name $(ml-workspace-name) \
+        train.py \
+        --DATASET_NAME german_credit_dataset \
+        --MODEL_NAME credit-prediction.pkl
+      workingDirectory: 'models/german-credit-basic'
+
+
