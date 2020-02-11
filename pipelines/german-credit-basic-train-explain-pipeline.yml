@@ -65,8 +65,8 @@ steps:
       workingDirectory: 'models/german-credit-basic'
 
   - task: PublishBuildArtifacts@1
-    displayName: 'Publish run details'
+    displayName: 'Publish run and details'
     inputs:
       PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-      ArtifactName: 'model-training'
+      ArtifactName: 'model-details'
       publishLocation: 'Container'
