@@ -72,6 +72,13 @@ steps:
       Contents: '*'
       TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
+  - task: CopyFiles@2
+    displayName: 'Copy Python code'
+    inputs:
+      SourceFolder: '$(ml-model-path)'
+      Contents: '**/*.py'
+      TargetFolder: '$(Build.ArtifactStagingDirectory)'
+
   - task: PublishBuildArtifacts@1
     displayName: 'Publish run and details'
     inputs:
