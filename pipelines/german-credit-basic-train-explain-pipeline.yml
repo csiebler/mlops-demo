@@ -13,7 +13,6 @@ steps:
   - task: AzureCLI@2
     inputs:
       azureSubscription: $(ml-workspace-connection)
-      scriptType: 'shell'
+      scriptType: 'bash'
       scriptLocation: 'inlineScript'
       inlineScript: 'az extension add -n azure-cli-ml'
-
