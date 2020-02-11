@@ -15,7 +15,8 @@ variables: {
   ml-model-name: 'german-credit-basic-model',
   ml-model-filename: 'credit-prediction.pkl',
   ml-train-script: 'train.py',
-  ml-train-conda-file: 'conda_train.yml'
+  ml-train-conda-file: 'conda_train.yml',
+  ml-model-path: 'models/german-credit-basic'
 }
 
 steps:
@@ -45,7 +46,7 @@ steps:
         $(ml-train-script) \
         --DATASET_NAME $(ml-dataset-name) \
         --MODEL_NAME $(ml-model-filename)
-      workingDirectory: 'models/german-credit-basic'
+      workingDirectory: $(ml-model-path)
 
   - task: AzureCLI@2
     displayName: 'Register model'
@@ -62,11 +63,18 @@ steps:
         --asset-path outputs/$(ml-model-filename) \
         --experiment-name $(ml-experiment-name) \
         --name $(ml-model-name)
-      workingDirectory: 'models/german-credit-basic'
+      workingDirectory: $(ml-model-path)
+
+  - task: CopyFiles@2
+    displayName: 'Copy deployment configs'
+    inputs:
+      SourceFolder: '$(ml-model-path)/inference-config'
+      Contents: '*'
+      TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
   - task: PublishBuildArtifacts@1
     displayName: 'Publish run and details'
     inputs:
       PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-      ArtifactName: 'model-details'
+      ArtifactName: 'model-artifacts'
       publishLocation: 'Container'
