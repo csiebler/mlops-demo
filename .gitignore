@@ -3,6 +3,10 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# AML Specific
+model.json
+run.json
+
 # C extensions
 *.so
 

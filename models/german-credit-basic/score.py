@@ -4,11 +4,11 @@ import pandas as pd
 import joblib
 from azureml.core.model import Model
 
-MODEL_FILE_NAME = "german-credit-basic-model"
+MODEL_NAME = 'german-credit-basic-model-test'
 
 def init():
     global model
-    model_path = Model.get_model_path(MODEL_FILE_NAME)
+    model_path = Model.get_model_path(MODEL_NAME)
     model = joblib.load(model_path)
 
 def run(raw_data):
