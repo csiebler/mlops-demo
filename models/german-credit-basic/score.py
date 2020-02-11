@@ -4,7 +4,7 @@ import pandas as pd
 import joblib
 from azureml.core.model import Model
 
-MODEL_NAME = 'german-credit-basic-model-test'
+MODEL_NAME = 'german-credit-basic-model'
 
 def init():
     global model
