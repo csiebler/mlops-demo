@@ -1,0 +1,19 @@
+trigger:
+- master
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+
+variables: { 
+  ml-workspace-connection: 'aml-workspace-connection' ,
+}
+
+steps:
+  - task: AzureCLI@2
+    inputs:
+      azureSubscription: $(ml-workspace-connection)
+      scriptType: 'shell'
+      scriptLocation: 'inlineScript'
+      inlineScript: 'az extension add -n azure-cli-ml'
+
