@@ -4,20 +4,18 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
-
-variables: { 
-  ml-workspace-connection: 'aml-workspace-connection',
-  ml-workspace-name: 'csamlfsi-ws',
-  ml-workspace-rg: 'csamlfsi-rg',
-  ml-compute-name: 'amlcluster',
-  ml-experiment-name: 'german-credit-basic-ci',
-  ml-dataset-name: 'german_credit_dataset',
-  ml-model-name: 'german-credit-basic-model',
-  ml-model-filename: 'credit-prediction.pkl',
-  ml-train-script: 'train.py',
-  ml-train-conda-file: 'conda_train.yml',
+variables:
+  ml-workspace-connection: 'aml-workspace-connection'
+  ml-workspace-name: 'csamlfsi-ws'
+  ml-workspace-rg: 'csamlfsi-rg'
+  ml-compute-name: 'amlcluster'
+  ml-experiment-name: 'german-credit-basic-ci'
+  ml-dataset-name: 'german_credit_dataset'
+  ml-model-name: 'german-credit-basic-model'
+  ml-model-filename: 'credit-prediction.pkl'
+  ml-train-script: 'train.py'
+  ml-train-conda-file: 'conda_train.yml'
   ml-model-path: 'models/german-credit-basic'
-}
 
 steps:
   - task: AzureCLI@2
