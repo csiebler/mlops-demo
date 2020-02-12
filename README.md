@@ -1,8 +1,31 @@
 # mlops-demo
 Demo for MLOps with Azure Machine Learning
 
+## Conventions
 
+This repo is fully based on conventions in order to make MLOps reusable and easily scaleable.
 
+For model source code, the directory structure is as follows:
+
+```
+models
+    \- model1
+        train.py (entry file for training)
+        score.py (entry file for scoring)
+        \- inference-config
+            conda_inference.yml - Conda environement definition for inference/scoring
+            inference-config.json - Azure Machine Learning config for inferencing
+            prod-deployment-config.yml - Production deployment infrastructure definition (e.g., AKS configuration)
+            qa-deployment-config.yml - QA deployment infrastructure definition (e.g., ACI configuration)
+        \- train-config
+            conda_train.yml - Conda environement definition for training
+    \- model2
+        ...same file and folder structure...
+```
+
+## Testing
+
+This snipped can be used to manually showcase/test the deployed model on ACI: 
 
 ```python
 import requests
