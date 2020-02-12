@@ -58,6 +58,8 @@ steps:
         --workspace-name $(ml-workspace-name) \
         --run-metadata-file $(Build.ArtifactStagingDirectory)/run.json \
         --output-metadata-file $(Build.ArtifactStagingDirectory)/model.json \
+        --property git-repo-url=$(Build.Repository.Uri) \
+        --property git-commit-id=$(Build.SourceVersion) \
         --asset-path outputs/$(ml-model-filename) \
         --experiment-name $(ml-experiment-name) \
         --name $(ml-model-name)
