@@ -12,6 +12,6 @@ containerResourceRequirements:
   memoryInGB: 0.5
 
 authEnabled: True
-appInsightsEnabled: False
+appInsightsEnabled: True
 maxConcurrentRequestsPerContainer: 1
 sslEnabled: False
