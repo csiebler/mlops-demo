@@ -1,13 +1,18 @@
 # mlops-demo
 Demo for MLOps with Azure Machine Learning
 
+## Setup
+
+To be written.
+
 ## Conventions
 
 This repo is fully based on conventions in order to make MLOps reusable and easily scaleable.
-
-For model source code, the directory structure is as follows:
+The directory structure is as follows:
 
 ```
+pipelines
+    \- train-and-register.yml - Base pipeline for training and registering a model
 models
     \- model1
         train.py (entry file for training)
