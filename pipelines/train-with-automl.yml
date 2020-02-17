@@ -37,6 +37,7 @@ steps:
       azureSubscription: $(ml-workspace-connection)
       scriptType: 'bash'
       scriptLocation: 'inlineScript'
+      workingDirectory: $(ml-model-path)
       inlineScript: |
         az ml run submit-script \
         --resource-group $(ml-workspace-rg) \
@@ -46,6 +47,4 @@ steps:
         --experiment-name $(ml-experiment-name) \
         --output-metadata-file $(Build.ArtifactStagingDirectory)/run.json \
         train.py \
-        $(ml-script-arguments)
-
-      workingDirectory: $(ml-model-path)
+        $(ml-script-arguments
