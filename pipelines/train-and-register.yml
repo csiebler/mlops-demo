@@ -16,14 +16,12 @@ trigger:
     - master
   paths:
     include:
-    - $(ml-model-path)/*
+    - $(ml-model-path)
     exclude:
     - README.md
 
-
 pool:
   vmImage: 'ubuntu-latest'
-
 
 steps:
   - task: AzureCLI@2
@@ -59,6 +57,7 @@ steps:
       azureSubscription: $(ml-workspace-connection)
       scriptType: 'bash'
       scriptLocation: 'inlineScript'
+      workingDirectory: $(ml-model-path)
       inlineScript: |
         az ml model register \
         --resource-group $(ml-workspace-rg) \
@@ -70,7 +69,6 @@ steps:
         --asset-path outputs/$(ml-model-filename) \
         --experiment-name $(ml-experiment-name) \
         --name $(ml-model-name)
-      workingDirectory: $(ml-model-path)
 
   - task: CopyFiles@2
     displayName: 'Copy deployment configs'

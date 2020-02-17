@@ -14,7 +14,7 @@ trigger:
     - master
   paths:
     include:
-    - $(ml-model-path)/*
+    - $(ml-model-path)
     exclude:
     - README.md
 
@@ -32,7 +32,7 @@ steps:
         az extension add -n azure-cli-ml
 
   - task: AzureCLI@2
-    displayName: 'Train and explain model'
+    displayName: 'Train model (AutoML)'
     inputs:
       azureSubscription: $(ml-workspace-connection)
       scriptType: 'bash'
@@ -47,4 +47,4 @@ steps:
         --experiment-name $(ml-experiment-name) \
         --output-metadata-file $(Build.ArtifactStagingDirectory)/run.json \
         train.py \
-        $(ml-script-arguments
+        $(ml-script-arguments)
