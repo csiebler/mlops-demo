@@ -1,6 +1,7 @@
 import os
 import sys
 import argparse
+import shutil
 import logging
 import azureml.core
 from azureml.core import Run
@@ -20,7 +21,6 @@ def main():
     
     automl_settings = {
         "task": 'classification',
-        "debug_log": 'automl_errors.log',
         "verbosity": logging.INFO,
         "primary_metric": 'accuracy',
         "experiment_timeout_hours": 0.1,
@@ -38,6 +38,10 @@ def main():
 
     automl_config = AutoMLConfig(**automl_settings)
     run = run.submit_child(automl_config, show_output = True)
+
+    output_dir = './outputs/'
+    os.makedirs(output_dir, exist_ok=True)
+    shutil.copy2('automl.log', output_dir)
 
 def getRuntimeArgs():
     parser = argparse.ArgumentParser()
