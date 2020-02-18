@@ -1,4 +1,5 @@
 import os
+import json
 import sys
 import argparse
 import shutil
@@ -23,7 +24,7 @@ def main():
         "task": 'classification',
         "verbosity": logging.INFO,
         "primary_metric": 'accuracy',
-        "experiment_timeout_hours": 0.1,
+        "experiment_timeout_hours": 0.05,
         "n_cross_validations": 3,
         "enable_stack_ensemble": False,
         "enable_voting_ensemble": False,
@@ -39,16 +40,21 @@ def main():
     automl_config = AutoMLConfig(**automl_settings)
     run = run.submit_child(automl_config, show_output = True)
 
+    best_run, fitted_model = run.get_output()
+    run.add_properties({"best_run_id": best_run.run_id})
+
     output_dir = './outputs/'
     os.makedirs(output_dir, exist_ok=True)
     shutil.copy2('automl.log', output_dir)
+
+    with open(output_dir + 'best_run.json', 'w') as f:
+        json.dump(best_run, f)
 
 def getRuntimeArgs():
     parser = argparse.ArgumentParser()
     parser.add_argument('--DATASET_NAME', type=str)
     args = parser.parse_args()
     return args.DATASET_NAME
-
 
 if __name__ == "__main__":
     main()
