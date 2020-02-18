@@ -13,6 +13,8 @@ from azureml.train.automl import AutoMLConfig
 
 def main():
 
+    print(azureml.core.VERSION)
+
     dataset_name = getRuntimeArgs()
 
     run = Run.get_context()
@@ -41,7 +43,6 @@ def main():
     run = run.submit_child(automl_config, show_output = True)
 
     best_run, fitted_model = run.get_output()
-    run.add_properties({"best_run_id": best_run.run_id})
 
     output_dir = './outputs/'
     os.makedirs(output_dir, exist_ok=True)
