@@ -48,3 +48,24 @@ steps:
         --output-metadata-file $(Build.ArtifactStagingDirectory)/run.json \
         train.py \
         $(ml-script-arguments)
+
+  - task: CopyFiles@2
+    displayName: 'Copy deployment configs'
+    inputs:
+      SourceFolder: '$(ml-model-path)/inference-config'
+      Contents: '*'
+      TargetFolder: '$(Build.ArtifactStagingDirectory)'
+
+  - task: CopyFiles@2
+    displayName: 'Copy Python code'
+    inputs:
+      SourceFolder: '$(ml-model-path)'
+      Contents: '**/*.py'
+      TargetFolder: '$(Build.ArtifactStagingDirectory)'
+
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish run and details'
+    inputs:
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+      ArtifactName: 'model-artifacts'
+      publishLocation: 'Container'
