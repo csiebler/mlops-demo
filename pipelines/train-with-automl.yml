@@ -49,12 +49,12 @@ steps:
         train.py \
         $(ml-script-arguments)
 
-  - task: CopyFiles@2
-    displayName: 'Copy deployment configs'
-    inputs:
-      SourceFolder: '$(ml-model-path)/inference-config'
-      Contents: '*'
-      TargetFolder: '$(Build.ArtifactStagingDirectory)'
+  # - task: CopyFiles@2
+  #   displayName: 'Copy deployment configs'
+  #   inputs:
+  #     SourceFolder: '$(ml-model-path)/inference-config'
+  #     Contents: '*'
+  #     TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
   - task: CopyFiles@2
     displayName: 'Copy Python code'
