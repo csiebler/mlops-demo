@@ -11,9 +11,7 @@ dependencies:
   - azureml-sdk[explain]==1.0.83
   - azureml-dataprep[fuse,pandas]
   - azureml-contrib-pipeline-steps==1.0.83
-#  - azureml-contrib-explain-model==1.0.83
   - azureml-contrib-interpret==1.0.83
-#  - inference-schema[numpy-support]==1.0.83
   # Other
   - scipy==1.2.1
   - scikit-learn==0.20.3  

@@ -5,6 +5,7 @@ import dotenv
 import joblib
 import pandas as pd
 from azureml.core import Run
+from azureml.core import Dataset
 from sklearn.compose import ColumnTransformer
 from sklearn.impute import SimpleImputer
 from sklearn.linear_model import LogisticRegression
@@ -14,7 +15,10 @@ from sklearn.preprocessing import LabelEncoder
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.preprocessing import StandardScaler
 
-from azureml.core import Dataset
+from azureml.contrib.interpret.explanation.explanation_client import ExplanationClient
+from azureml.core.run import Run
+from interpret.ext.blackbox import TabularExplainer
+
 
 def main():
 
@@ -55,7 +59,6 @@ def model_train(ds_df, run):
             ('numeric', numeric_transformer, numeric_features),
             ('categorical', categorical_transformer, categorical_features)
         ], remainder="drop")
-    
 
     # Encode Labels
     le = LabelEncoder()
@@ -81,10 +84,6 @@ def model_train(ds_df, run):
     run.log('Test accuracy', test_acc)
     
     # Explain model
-    from azureml.contrib.interpret.explanation.explanation_client import ExplanationClient
-    from azureml.core.run import Run
-    from interpret.ext.blackbox import TabularExplainer
-
     client = ExplanationClient.from_run(run)
 
     explainer = TabularExplainer(lr_clf.steps[-1][1], 
@@ -104,7 +103,7 @@ def model_train(ds_df, run):
     print('global importance rank: {}'.format(global_explanation.global_importance_rank))
     
     client = ExplanationClient.from_run(run)
-    client.upload_model_explanation(global_explanation, comment='global explanation: all features')
+    #client.upload_model_explanation(global_explanation, comment='global explanation: all features')
 
     return lr_clf
 
