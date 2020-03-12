@@ -84,7 +84,6 @@ def model_train(ds_df, run):
     from azureml.contrib.interpret.explanation.explanation_client import ExplanationClient
     from azureml.core.run import Run
     from interpret.ext.blackbox import TabularExplainer
-    from azureml.contrib.interpret.visualize import ExplanationDashboard
 
     client = ExplanationClient.from_run(run)
 
