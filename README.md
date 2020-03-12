@@ -1,5 +1,8 @@
 # mlops-demo
+
 Demo for MLOps with Azure Machine Learning
+
+:star: A fully documenated and official repository can be [found here](https://github.com/MicrosoftDocs/pipelines-azureml).
 
 ## Setup
 
@@ -39,35 +42,17 @@ import json
 url = '<scoring url>'
 
 test_sample = json.dumps({
-  'data': {
-    "Age": [
-      20
-    ],
-    "Sex": [
-      "male"
-    ],
-    "Job": [
-      0
-    ],
-    "Housing": [
-      "own"
-    ],
-    "Saving accounts": [
-      "little"
-    ],
-    "Checking account": [
-      "little"
-    ],
-    "Credit amount": [
-      100
-    ],
-    "Duration": [
-      48
-    ],
-    "Purpose": [
-      "radio/TV"
-    ]
-  }
+  'data': [{
+    "Age": 20,
+    "Sex": "male",
+    "Job": 0,
+    "Housing": "own",
+    "Saving accounts": "little",
+    "Checking account": "little",
+    "Credit amount": 100,
+    "Duration": 48,
+    "Purpose": "radio/TV"
+  }]
 })
 
 test_sample = bytes(test_sample,encoding = 'utf8')
