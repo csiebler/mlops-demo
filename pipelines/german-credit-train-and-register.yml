@@ -28,6 +28,7 @@ steps:
       azureSubscription: $(ml-workspace-connection)
       scriptType: 'bash'
       scriptLocation: 'inlineScript'
+      workingDirectory: $(ml-model-path)
       inlineScript: |
         az ml folder attach -g $(ml-workspace-rg) -w $(ml-workspace-name)
 
@@ -61,24 +62,3 @@ steps:
         --asset-path outputs/$(ml-model-filename) \
         --experiment-name $(ml-experiment-name) \
         --name $(ml-model-name)
-
-  - task: CopyFiles@2
-    displayName: 'Copy deployment configs'
-    inputs:
-      SourceFolder: '$(ml-model-path)/config'
-      Contents: '*'
-      TargetFolder: '$(Build.ArtifactStagingDirectory)'
-
-  - task: CopyFiles@2
-    displayName: 'Copy Python code'
-    inputs:
-      SourceFolder: '$(ml-model-path)'
-      Contents: '**/*.py'
-      TargetFolder: '$(Build.ArtifactStagingDirectory)'
-
-  - task: PublishBuildArtifacts@1
-    displayName: 'Publish run and details'
-    inputs:
-      PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-      ArtifactName: 'model-artifacts'
-      publishLocation: 'Container'

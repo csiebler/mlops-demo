@@ -1,0 +1,63 @@
+variables:
+  ml-workspace-connection: 'aml-workspace-connection'
+  ml-workspace-name: 'csamlfsi-ws'
+  ml-workspace-rg: 'csamlfsi-rg'
+  ml-compute-name: 'amlcluster'
+  ml-experiment-name: 'german-credit-basic-ci'
+  ml-model-name: 'german-credit-basic-model'
+  ml-model-path: 'models/german-credit-basic'
+  ml-aks-cluster: 'aks-prod'
+
+trigger: none
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+  - task: AzureCLI@2
+    displayName: 'Install AML CLI'
+    inputs:
+      azureSubscription: $(ml-workspace-connection)
+      scriptType: 'bash'
+      scriptLocation: 'inlineScript'
+      inlineScript: |
+        az extension add -n azure-cli-ml
+
+  - task: AzureCLI@2
+    displayName: 'Attach to workspace'
+    inputs:
+      azureSubscription: $(ml-workspace-connection)
+      scriptType: 'bash'
+      scriptLocation: 'inlineScript'
+      inlineScript: |
+        az ml folder attach -g $(ml-workspace-rg) -w $(ml-workspace-name)
+
+  - task: AzureCLI@2
+    displayName: 'Deploy model to ACI for QA'
+    inputs:
+      azureSubscription: $(ml-workspace-connection)
+      workingDirectory: $(ml-model-path)
+      scriptLocation: inlineScript
+      scriptType: bash
+      inlineScript: |
+        LATEST_VERSION=`az ml model list -n $(ml-model-name) --query '[0].version'`
+        az ml model deploy -n german-credit-aci-qa -m $(ml-model-name):$LATEST_VERSION \
+          --ic config/inference-config.yml \
+          --dc config/deployment-config-aci.yml \
+          --overwrite
+
+  - task: AzureCLI@2
+    displayName: 'Deploy model to AKS for Production'
+    inputs:
+      azureSubscription: $(ml-workspace-connection)
+      workingDirectory: $(ml-model-path)
+      scriptLocation: inlineScript
+      scriptType: bash
+      inlineScript: |
+        LATEST_VERSION=`az ml model list -n $(ml-model-name) --query '[0].version'`
+        az ml model deploy -n german-credit-aks-prod \
+          --ct $(ml-aks-cluster) \
+          -m $(ml-model-name):$LATEST_VERSION \
+          --ic config/inference-config.yml \
+          --dc config/deployment-config-aks.yml \
+          --overwrite
