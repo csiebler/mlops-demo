@@ -6,6 +6,7 @@ variables:
   ml-experiment-name: 'german-credit-basic-ci'
   ml-model-name: 'german-credit-basic-model'
   ml-model-path: 'models/german-credit-basic'
+  ml-model-filename: 'credit-prediction.pkl'
 
 trigger: none
 
