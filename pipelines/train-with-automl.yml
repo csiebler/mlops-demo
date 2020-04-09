@@ -8,15 +8,7 @@ variables:
   ml-model-path: 'models/german-credit-automl'
   ml-script-arguments: --DATASET_NAME $(ml-dataset-name)
 
-trigger:
-  branches:
-    include:
-    - master
-  paths:
-    include:
-    - $(ml-model-path)
-    exclude:
-    - README.md
+trigger: none
 
 pool:
   vmImage: 'ubuntu-latest'

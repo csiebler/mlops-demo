@@ -23,7 +23,7 @@ models
         \- config
             deployment-config-aci-qa.yml - QA deployment infrastructure definition (e.g., ACI configuration)
             deployment-config-aks-prod.yml - Production deployment infrastructure definition (e.g., AKS configuration)
-            infrence-conda.yml - Conda environement definition for inferencing/scoring
+            inference-conda.yml - Conda environement definition for inferencing/scoring
             inference-config.yml - Azure Machine Learning config for inferencing
             train-conda.yml - Conda environement definition for training
     \- model2
@@ -59,5 +59,5 @@ test_sample = bytes(test_sample,encoding = 'utf8')
 headers = {'Content-Type':'application/json'}
 resp = requests.post(url, test_sample, headers=headers)
 
-print("prediction:", resp.text)
+print("Prediction (good, bad):", resp.text)
 ```

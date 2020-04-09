@@ -6,6 +6,7 @@ __pycache__/
 # AML Specific
 model.json
 run.json
+.azureml/
 
 # C extensions
 *.so

@@ -8,10 +8,10 @@ dependencies:
 - pip
 - pip:
   # Azure ML
-  - azureml-sdk[explain]==1.0.83
+  - azureml-sdk[explain]
   - azureml-dataprep[fuse,pandas]
-  - azureml-contrib-pipeline-steps==1.0.83
-  - azureml-contrib-interpret==1.0.83
+  - azureml-contrib-pipeline-steps
+  - azureml-contrib-interpret
   # Other
   - scipy==1.2.1
   - scikit-learn==0.20.3  
