@@ -4,7 +4,7 @@ autoScaler:
     autoscaleEnabled: True
     minReplicas: 1
     maxReplicas: 3
-    refreshPeriodInSeconds: 1 #10
+    refreshPeriodInSeconds: 10
     targetUtilization: 70
 
 containerResourceRequirements:
@@ -13,5 +13,4 @@ containerResourceRequirements:
 
 authEnabled: True
 appInsightsEnabled: True
-maxConcurrentRequestsPerContainer: 1
 sslEnabled: False

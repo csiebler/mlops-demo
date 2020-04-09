@@ -44,7 +44,7 @@ steps:
         az ml run submit-script \
         --resource-group $(ml-workspace-rg) \
         --workspace-name $(ml-workspace-name) \
-        --conda-dependencies train-config/conda_train.yml \
+        --conda-dependencies config/train-conda.yml \
         --ct $(ml-compute-name) \
         --experiment-name $(ml-experiment-name) \
         --output-metadata-file $(Build.ArtifactStagingDirectory)/run.json \
@@ -73,7 +73,7 @@ steps:
   - task: CopyFiles@2
     displayName: 'Copy deployment configs'
     inputs:
-      SourceFolder: '$(ml-model-path)/inference-config'
+      SourceFolder: '$(ml-model-path)/config'
       Contents: '*'
       TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
