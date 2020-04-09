@@ -29,7 +29,7 @@ steps:
       scriptType: 'bash'
       scriptLocation: 'inlineScript'
       inlineScript: |
-        az folder attach -g $(ml-workspace-rg) -w $(ml-workspace-name)
+        az ml folder attach -g $(ml-workspace-rg) -w $(ml-workspace-name)
 
   - task: AzureCLI@2
     displayName: 'Train and explain model'
