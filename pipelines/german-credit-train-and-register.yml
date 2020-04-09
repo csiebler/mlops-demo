@@ -1,12 +1,5 @@
-variables:
-  ml-workspace-connection: 'aml-workspace-connection'
-  ml-workspace-name: 'csamlfsi-ws'
-  ml-workspace-rg: 'csamlfsi-rg'
-  ml-compute-name: 'amlcluster'
-  ml-experiment-name: 'german-credit-basic-ci'
-  ml-model-name: 'german-credit-basic-model'
-  ml-model-path: 'models/german-credit-basic'
-  ml-model-filename: 'credit-prediction.pkl'
+variables: 
+ - template: german-credit-config.yml
 
 trigger: none
 
