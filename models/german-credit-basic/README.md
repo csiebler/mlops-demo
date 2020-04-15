@@ -4,14 +4,19 @@
 
 We can fully run this example locally on our machine, while still logging the results to Azure Machine Learning.
 
-First, we attach this local folder to the resource group with our Azure Machine Learning workspace:
+Let's make sure we are in the model folder:
 
 ```cli
 cd models/german-credit-basic
+```
+
+Now, we can attach this local folder to the resource group with our Azure Machine Learning workspace:
+
+```cli
 az ml folder attach -g csamlfsi-rg -w csamlfsi-ws
 ```
 
-Then we can run the `train.py` locally in a Docker container on our machine:
+Next, we can run the `train.py` locally in a Docker container on our machine:
 
 ```cli
 az ml run submit-script -c config/train-local -e german-credit-train-local
@@ -21,16 +26,9 @@ This will create a Docker container with the conda enviroment from [`config/trai
 
 ## Running this code on Azure Machine Learning Compute
 
-Next, we can run this example directly on Azure Machine Learning compute by using a different `runconfig` file.
+Finally, we can run this example directly on Azure Machine Learning compute by using a different `runconfig` file. Let's make sure we are still in the `models/german-credit-basic` folder and that we executed `az ml folder attach -g csamlfsi-rg -w csamlfsi-ws` before.
 
-First, we attach this local folder to the resource group with our Azure Machine Learning workspace (no need to run it again if we ran it before):
-
-```cli
-cd models/german-credit-basic
-az ml folder attach -g csamlfsi-rg -w csamlfsi-ws
-```
-
-Then we can run the `train.py` on Azure Machine Learning compute by using the [`config/train-amlcompute.runconfig`](config/train-amlcompute.runconfig) configuration:
+To run the `train.py` on Azure Machine Learning compute, we just use the [`config/train-amlcompute.runconfig`](config/train-amlcompute.runconfig) configuration:
 
 ```cli
 az ml run submit-script -c config/train-amlcompute -e german-credit-train-amlcompute

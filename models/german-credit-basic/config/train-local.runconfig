@@ -2,10 +2,7 @@ script: train.py
 arguments: [--DATASET_NAME, german_credit_dataset, --MODEL_NAME, credit-prediction.pkl]
 target: local
 framework: Python
-communicator: None
 autoPrepareEnvironment: true
-maxRunDurationSeconds: 
-nodeCount: 1
 environment:
   name: 
   version: 
@@ -15,7 +12,6 @@ environment:
     userManagedDependencies: false
     interpreterPath: python
     condaDependenciesFile: config/train-conda.yml
-    baseCondaEnvironment: 
   docker:
     enabled: true
     baseImage: mcr.microsoft.com/azureml/base:0.2.4
@@ -29,10 +25,8 @@ environment:
       password: 
 history:
   outputCollection: true
-  snapshotProject: true
+  snapshotProject: false
   directoriesToWatch:
   - logs
-mpi:
-  processCountPerNode: 1
 dataReferences:
 sourceDirectoryDataStore:
