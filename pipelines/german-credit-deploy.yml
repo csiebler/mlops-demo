@@ -1,4 +1,3 @@
-  
 variables: 
  - template: german-credit-config.yml
 
