@@ -11,7 +11,9 @@ containerResourceRequirements:
   cpu: 1
   memoryInGB: 0.5
 
-authEnabled: True
+# Only one can be True
+authEnabled: False
 tokenAuthEnabled: True
+
 appInsightsEnabled: True
 sslEnabled: False
