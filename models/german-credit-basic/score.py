@@ -16,7 +16,7 @@ def run(raw_data):
         data = json.loads(raw_data)['data']
         input_df = pd.DataFrame.from_dict(data)
         proba = model.predict_proba(input_df)
-        result = {"predict_proba":proba.tolist()}
+        result = {"predict_proba": proba.tolist()}
         return result
     except Exception as e:
         error = str(e)
