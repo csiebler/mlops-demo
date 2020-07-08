@@ -2,7 +2,7 @@
 
 Demo for MLOps with Azure Machine Learning
 
-:star: A fully documenated and official repository can be [found here](https://github.com/MicrosoftDocs/pipelines-azureml).
+:star: A fully documented starting template repo can be found here: [microsoft/aml-acceleration-template](https://github.com/microsoft/aml-acceleration-template/).
 
 ## Setup
 
@@ -15,7 +15,9 @@ The directory structure is as follows:
 
 ```
 pipelines
-    \- train-and-register.yml - Base pipeline for training and registering a model
+    \- german-credit-config.yml - Configuration for german credit model
+    \- german-credit-deploy.yml - Deployment pipeline for german credit model
+    \- german-credit-train-and-register.yml - Pipline for training and registering the base german credit model
 models
     \- model1
         train.py (entry file for training)
@@ -54,10 +56,8 @@ test_sample = json.dumps({
   }]
 })
 
-test_sample = bytes(test_sample,encoding = 'utf8')
-
 headers = {'Content-Type':'application/json'}
-resp = requests.post(url, test_sample, headers=headers)
+resp = requests.post(url, json=test_sample, headers=headers)
 
 print("Prediction (good, bad):", resp.text)
 ```
