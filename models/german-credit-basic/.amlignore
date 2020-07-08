@@ -6,3 +6,4 @@ outputs
 azureml-setup
 docs
 __pycache__/
+notebooks

@@ -1,7 +1,5 @@
 import os
-import sys
 import argparse
-import dotenv
 import joblib
 import pandas as pd
 from azureml.core import Run
@@ -16,14 +14,18 @@ from sklearn.preprocessing import OneHotEncoder
 from sklearn.preprocessing import StandardScaler
 
 from azureml.contrib.interpret.explanation.explanation_client import ExplanationClient
-from azureml.core.run import Run
-from interpret.ext.blackbox import TabularExplainer
+from azureml.explain.model.tabular_explainer import TabularExplainer
 
+
+def getRuntimeArgs():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--MODEL_NAME', type=str)
+    parser.add_argument('--DATASET_NAME', type=str)
+    args = parser.parse_args()
+    return args.MODEL_NAME, args.DATASET_NAME
 
 def main():
-
     model_name, dataset_name = getRuntimeArgs()
-    dotenv.load_dotenv()
 
     run = Run.get_context()
 
@@ -32,7 +34,7 @@ def main():
 
     clf = model_train(credit_data_df, run)
 
-    #copying to "outputs" directory, automatically uploads it to Azure ML
+    #copying model to "outputs" directory, this will automatically upload it to Azure ML
     output_dir = './outputs/'
     os.makedirs(output_dir, exist_ok=True)
     joblib.dump(value=clf, filename=output_dir+model_name)
@@ -77,16 +79,14 @@ def model_train(ds_df, run):
     train_acc = lr_clf.score(X_train, y_train)
     test_acc = lr_clf.score(X_test, y_test)
     print("Training accuracy: %.3f" % train_acc)
-    print("Test data accuracy: %.3f" % test_acc)
+    print("Testing accuracy: %.3f" % test_acc)
 
     # Log to Azure ML
     run.log('Train accuracy', train_acc)
     run.log('Test accuracy', test_acc)
     
     # Explain model
-    client = ExplanationClient.from_run(run)
-
-    explainer = TabularExplainer(lr_clf.steps[-1][1], 
+    explainer = TabularExplainer(lr_clf.steps[-1][1],
                                  initialization_examples=X_train, 
                                  features=X_raw.columns, 
                                  classes=["Good", "Bad"], 
@@ -106,13 +106,6 @@ def model_train(ds_df, run):
     client.upload_model_explanation(global_explanation, comment='global explanation: all features')
 
     return lr_clf
-
-def getRuntimeArgs():
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--MODEL_NAME', type=str)
-    parser.add_argument('--DATASET_NAME', type=str)
-    args = parser.parse_args()
-    return args.MODEL_NAME, args.DATASET_NAME
 
 if __name__ == "__main__":
     main()

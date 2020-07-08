@@ -2,7 +2,7 @@ variables:
   ml-workspace-connection: 'aml-workspace-connection'
   ml-workspace-name: 'csamlfsi-ws'
   ml-workspace-rg: 'csamlfsi-rg'
-  ml-compute-name: 'amlcluster'
+  ml-compute-name: 'cpu-cluster'
   ml-experiment-name: 'german-credit-basic-ci'
   ml-model-name: 'german-credit-basic-model'
   ml-model-path: 'models/german-credit-basic'

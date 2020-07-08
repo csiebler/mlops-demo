@@ -2,10 +2,8 @@ script: train.py
 arguments: [--DATASET_NAME, german_credit_dataset, --MODEL_NAME, credit-prediction.pkl]
 target: local
 framework: Python
-autoPrepareEnvironment: true
+communicator: None
 environment:
-  name: 
-  version: 
   environmentVariables:
     EXAMPLE_ENV_VAR: EXAMPLE_VALUE
   python:
@@ -14,19 +12,5 @@ environment:
     condaDependenciesFile: config/train-conda.yml
   docker:
     enabled: true
-    baseImage: mcr.microsoft.com/azureml/base:0.2.4
-    sharedVolumes: true
-    gpuSupport: false
-    shmSize: 1g
+    baseImage: mcr.microsoft.com/azureml/base:intelmpi2018.3-ubuntu16.04
     arguments: []
-    baseImageRegistry:
-      address: 
-      username: 
-      password: 
-history:
-  outputCollection: true
-  snapshotProject: false
-  directoriesToWatch:
-  - logs
-dataReferences:
-sourceDirectoryDataStore:
