@@ -42,7 +42,7 @@ import json
 
 url = '<scoring url>'
 
-test_sample = json.dumps({
+test_data = {
   'data': [{
     "Age": 20,
     "Sex": "male",
@@ -54,10 +54,10 @@ test_sample = json.dumps({
     "Duration": 48,
     "Purpose": "radio/TV"
   }]
-})
+}
 
-headers = {'Content-Type':'application/json'}
-resp = requests.post(url, json=test_sample, headers=headers)
+headers = {'Content-Type': 'application/json'}
+resp = requests.post(url, json=test_data, headers=headers)
 
 print("Prediction (good, bad):", resp.text)
 ```
