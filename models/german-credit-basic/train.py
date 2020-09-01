@@ -103,7 +103,7 @@ def model_train(ds_df, run):
     print('global importance rank: {}'.format(global_explanation.global_importance_rank))
     
     client = ExplanationClient.from_run(run)
-    client.upload_model_explanation(global_explanation, comment='global explanation: all features')
+    client.upload_model_explanation(global_explanation, comment='Global Explanation: All Features')
 
     return lr_clf
 

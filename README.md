@@ -1,8 +1,6 @@
 # mlops-demo
 
-Demo for MLOps with Azure Machine Learning
-
-:star: A fully documented starting template repo can be found here: [microsoft/aml-acceleration-template](https://github.com/microsoft/aml-acceleration-template/).
+This repo shows some introduction examples to Azure Machine Learning and a simple MLOps implemenation for automating model training and deployment.
 
 ## Setup & Demo Flow
 
@@ -82,3 +80,7 @@ resp = requests.post(url, json=test_data, headers=headers)
 
 print("Prediction (good, bad):", resp.text)
 ```
+
+## Further Work
+
+:star: A fully documented starting template for Azure Machine Leraning with MLOps can be found here: [microsoft/aml-acceleration-template](https://github.com/microsoft/aml-acceleration-template/). This includes model training, validation, testing, deployment, pipelines, and several other production-grade capabilties.
