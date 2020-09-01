@@ -34,9 +34,11 @@ To run the `train.py` on Azure Machine Learning compute, we just use the [`confi
 az ml run submit-script -c config/train-amlcompute -e german-credit-train-amlcompute -t run.json
 ```
 
-This will do exactly the same as locally, but everything will happen in Azure. The full configuration can be found in [`config/train-amlcompute.runconfig`](config/train-amlcompute.runconfig).
+This will do exactly the same as locally, but everything will happen in Azure. The `-t` option outputs a reference to the experiment run, which can be used to directly register the model from it. The full configuration can be found in [`config/train-amlcompute.runconfig`](config/train-amlcompute.runconfig).
 
 ## Model registration
+
+Given the `run-metadata-file` from the experiment run, we can now register the model in AML. In this case, the `asset-path` points to the path structure within the experiment run:
 
 ```cli
 az ml model register --name german-credit-basic-model --asset-path outputs/credit-prediction.pkl --run-metadata-file run.json
