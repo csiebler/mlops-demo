@@ -6,7 +6,7 @@ variables:
   ml-workspace-name: 'csamlfsi-ws'
   ml-workspace-rg: 'csamlfsi-rg'
 
-  # Name of your Compute Cluster (will be created if it doesn't exist)
+  # Name of your Compute Cluster (needs to exist)
   ml-compute-name: 'cpu-cluster'
 
   # Name of your experiment for training tracking
