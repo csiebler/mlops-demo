@@ -1,16 +1,15 @@
 import json
+import os
 import numpy as np
 import pandas as pd
 import joblib
 from inference_schema.schema_decorators import input_schema, output_schema
 from inference_schema.parameter_types.standard_py_parameter_type import StandardPythonParameterType
-from azureml.core.model import Model
-
-MODEL_NAME = 'german-credit-basic-model'
 
 def init():
     global model
-    model_path = Model.get_model_path(MODEL_NAME)
+    model_dir = os.getenv('AZUREML_MODEL_DIR')
+    model_path = os.path.join(model_dir, 'credit-prediction.pkl')
     model = joblib.load(model_path)
 
 # Automatically generate the swagger interface by providing an data example
