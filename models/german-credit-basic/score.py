@@ -44,7 +44,7 @@ def run(data):
         result = {"predict_proba": proba.tolist()}
 
         # Collect data
-        correlations = inputs_dc.collect(data)
+        correlations = inputs_dc.collect(data.to_numpy())
         predictions_data = predictions_dc.add_correlations(proba, correlations)
         predictions_dc.collect(predictions_data)
 
