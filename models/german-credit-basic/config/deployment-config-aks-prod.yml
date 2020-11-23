@@ -8,8 +8,8 @@ autoScaler:
     targetUtilization: 70
 
 containerResourceRequirements:
-  cpu: 1
-  memoryInGB: 0.5
+  cpu: 0.5
+  memoryInGB: 0.25
 
 # Only one can be True
 authEnabled: True
@@ -17,3 +17,6 @@ tokenAuthEnabled: False
 
 appInsightsEnabled: True
 sslEnabled: False
+
+dataCollection:
+  storageEnabled: True
