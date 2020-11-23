@@ -28,9 +28,9 @@ output_sample = [[0.7, 0.3]]
 
 @input_schema('data', StandardPythonParameterType(input_sample))
 @output_schema(StandardPythonParameterType(output_sample))
-def run(raw_data):
+def run(data):
     try:
-        df = pd.DataFrame(raw_data)
+        df = pd.DataFrame(data)
         proba = model.predict_proba(df)
         
         result = {"predict_proba": proba.tolist()}
