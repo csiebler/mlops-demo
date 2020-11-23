@@ -44,8 +44,10 @@ def run(data):
         result = {"predict_proba": proba.tolist()}
 
         # Collect data
-        inputs_dc.collect(data)
-        prediction_dc.collect(proba.tolist())
+        correlations = inputs_dc.collect(data)
+        predictions_data = predictions_dc.add_correlations(proba, correlations)
+        prediction_dc.collect(predictions_data)
+
         return result
     except Exception as e:
         error = str(e)
