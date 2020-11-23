@@ -4,7 +4,6 @@ channels:
   - defaults
 dependencies:
 - python=3.6.2
-- pip
 - pip:
   # Azure ML
   - azureml-defaults>=1.8.0
@@ -12,3 +11,4 @@ dependencies:
   - scikit-learn==0.20.3
   - joblib==0.13.2
   - pandas==0.25.3
+  - inference-schema
