@@ -32,7 +32,7 @@ def init():
     global inputs_dc
     global prediction_dc
     inputs_dc = ModelDataCollector("best_model", designation="inputs", feature_names=["Age", "Sex", "Job", "Housing", "Saving accounts", "Checking account", "Credit amount", "Duration", "Purpose"])
-    prediction_dc = ModelDataCollector("best_model", designation="predictions", feature_names=["good", "bad"])
+    predictions_dc = ModelDataCollector("best_model", designation="predictions", feature_names=["good", "bad"])
 
 @input_schema('data', StandardPythonParameterType(input_sample))
 @output_schema(StandardPythonParameterType(output_sample))
@@ -46,7 +46,7 @@ def run(data):
         # Collect data
         correlations = inputs_dc.collect(data)
         predictions_data = predictions_dc.add_correlations(proba, correlations)
-        prediction_dc.collect(predictions_data)
+        predictions_dc.collect(predictions_data)
 
         return result
     except Exception as e:
