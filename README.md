@@ -60,6 +60,7 @@ import requests
 import json
 
 url = '<scoring url>'
+key = '<api key>'
 
 test_data = {
   'data': [{
@@ -75,7 +76,7 @@ test_data = {
   }]
 }
 
-headers = {'Content-Type': 'application/json'}
+headers = {'Content-Type': 'application/json', 'Authorization': 'Bearer ' + key}
 resp = requests.post(url, json=test_data, headers=headers)
 
 print("Prediction (good, bad):", resp.text)
