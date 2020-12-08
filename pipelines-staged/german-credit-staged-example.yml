@@ -10,15 +10,17 @@ pool:
 stages:
 
 - stage: Dev
-  displayName: Train and register model in Dev
+  displayName: Dev Stage
   jobs:
     - template: train-and-register.yml
       parameters:
+        name: Dev
         variablesFile: german-credit-config-dev.yml
 
 - stage: Prod
-  displayName: Train and register model in Prod
+  displayName: Prod Phase
   jobs:
     - template: train-and-register.yml
       parameters:
+        name: Prod
         variablesFile: german-credit-config-prod.yml

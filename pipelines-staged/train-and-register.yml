@@ -1,9 +1,10 @@
 parameters:
+  name: ''
   variablesFile: ''
 
 jobs:
-- job: Train
-  displayName: Train and Register Model
+- job: TrainAndRegister
+  displayName: Train and Register Model - ${{ parameters.name }} stage
   variables:
   - template: ${{ parameters.variablesFile }}
   steps:
