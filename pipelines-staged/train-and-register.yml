@@ -9,11 +9,11 @@ steps:
   - task: AzureCLI@2
     displayName: 'Testing'
     inputs:
-      azureSubscription: $(ml-workspace-connection)
       scriptType: 'bash'
       scriptLocation: 'inlineScript'
       inlineScript: |
         echo $(parameters.variablesFile)
+        
   - task: AzureCLI@2
     displayName: 'Install AML CLI'
     inputs:
