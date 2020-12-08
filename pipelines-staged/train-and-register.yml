@@ -1,3 +1,10 @@
+parameters:
+- name: variablesFile
+  default: ''
+
+variables: 
+ - template: $(variablesFile)
+ 
 steps:
   - task: AzureCLI@2
     displayName: 'Install AML CLI'
