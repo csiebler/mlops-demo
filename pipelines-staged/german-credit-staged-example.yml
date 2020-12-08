@@ -10,16 +10,9 @@ pool:
 stages:
 - stage: Dev
   jobs:
-  - template: train-and-register.yml
-    parameters:
-      variablesFile: german-credit-config-dev.yml
-
-# stages:
-# - stage: Dev
-#   jobs:
-#   - job: Train
-#     displayName: Train and register model
-#     steps:
-#     - template: train-and-register.yml
-#       parameters:
-#         variablesFile: german-credit-config-dev.yml
+  - job: Train
+    displayName: Train and register model
+    steps:
+    - template: train-and-register.yml
+      parameters:
+        variablesFile: german-credit-config-dev.yml
