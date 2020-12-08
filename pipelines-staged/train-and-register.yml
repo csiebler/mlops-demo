@@ -9,7 +9,7 @@ steps:
   - task: AzureCLI@2
     displayName: 'Install AML CLI'
     inputs:
-      azureSubscription: $(ml-workspace-connection)
+      azureSubscription: ${{ variables.ml-workspace-connection }}
       scriptType: 'bash'
       scriptLocation: 'inlineScript'
       inlineScript: |
