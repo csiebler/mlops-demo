@@ -21,3 +21,5 @@ variables:
 
   # AKS cluster to deploy to (needs to exist)
   ml-aks-cluster: 'aks-prod'
+
+  test123: 'hallowelt'
