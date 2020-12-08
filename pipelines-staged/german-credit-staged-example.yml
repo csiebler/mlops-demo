@@ -12,7 +12,9 @@ stages:
   jobs:
   - job: Train
     displayName: Train and register model
+    variables:
+    - template: german-credit-config-dev.yml
     steps:
     - template: train-and-register.yml
-      parameters:
-        variablesFile: german-credit-config-dev.yml
+      # parameters:
+      #   variablesFile: german-credit-config-dev.yml

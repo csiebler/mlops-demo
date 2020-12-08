@@ -1,19 +1,11 @@
-parameters:
-- name: variablesFile
-  default: ''
+# parameters:
+# - name: variablesFile
+#   default: ''
 
 # variables:
 # - template: ${{ parameters.variablesFile }}
 
 steps:
-  - task: AzureCLI@2
-    displayName: 'Testing'
-    inputs:
-      scriptType: 'bash'
-      scriptLocation: 'inlineScript'
-      inlineScript: |
-        echo $(parameters.variablesFile)
-        
   - task: AzureCLI@2
     displayName: 'Install AML CLI'
     inputs:
