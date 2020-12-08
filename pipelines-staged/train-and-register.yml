@@ -37,7 +37,7 @@ steps:
         --run-configuration-name config/train-amlcompute \
         --target ${{ variables.ml_compute_name }} \
         --experiment-name ${{ variables.ml_experiment_name }} \
-        --output-metadata-file ${{ Build.ArtifactStagingDirectory }}/run.json
+        --output-metadata-file $(Build.ArtifactStagingDirectory)/run.json
 
   - task: AzureCLI@2
     displayName: 'Register model'
@@ -50,7 +50,7 @@ steps:
         az ml model register \
         --name ${{ variables.ml_model_name }} \
         --asset-path outputs/${{ variables.ml_model_filename }} \
-        --run-metadata-file ${{ Build.ArtifactStagingDirectory }}/run.json \
-        --output-metadata-file ${{ ArtifactStagingDirectory }}/model.json \
-        --property git-repo-url=${{ Build.Repository.Uri }} \
-        --property git-commit-id=${{ Build.SourceVersion }}
+        --run-metadata-file $(Build.ArtifactStagingDirectory)/run.json \
+        --output-metadata-file $(ArtifactStagingDirectory)/model.json \
+        --property git-repo-url=$(Build.Repository.Uri) \
+        --property git-commit-id=$(Build.SourceVersion)
