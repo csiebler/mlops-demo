@@ -3,7 +3,7 @@ parameters:
   default: ''
 
 variables:
- - template: ${{ parameters.variablesFile }}
+- template: ${{ parameters.variablesFile }}
 
 steps:
   - task: AzureCLI@2
