@@ -37,7 +37,7 @@ steps:
         --run-configuration-name config/train-amlcompute \
         --target ${{ variables.ml_compute_name }} \
         --experiment-name ${{ variables.ml_experiment_name }} \
-        --output-metadata-file ${{ variables.Build.ArtifactStagingDirectory }}/run.json
+        --output-metadata-file ${{ Build.ArtifactStagingDirectory }}/run.json
 
   - task: AzureCLI@2
     displayName: 'Register model'
