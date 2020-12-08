@@ -7,14 +7,22 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
+# stages:
+# - stage: Dev
+#   jobs:
+#   - job: Train
+#     displayName: Train and register model
+#     variables:
+#     - template: german-credit-config-dev.yml
+#     steps:
+#     - template: train-and-register.yml
+#       parameters:
+#         variablesFile: german-credit-config-dev.yml
+
 stages:
 - stage: Dev
+  displayName: Dev
   jobs:
-  - job: Train
-    displayName: Train and register model
-    variables:
-    - template: german-credit-config-dev.yml
-    steps:
     - template: train-and-register.yml
-      # parameters:
-      #   variablesFile: german-credit-config-dev.yml
+      parameters:
+        variablesFile: german-credit-config-dev.yml
