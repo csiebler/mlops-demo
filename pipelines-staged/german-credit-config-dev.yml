@@ -1,0 +1,23 @@
+variables:
+  # Name of your Azure DevOps service connection to your AML workspace
+  ml-workspace-connection: 'aml-workspace-connection'
+
+  # Name of your AML workspace and its resource group
+  ml-workspace-name: 'csamlfsi-ws'
+  ml-workspace-rg: 'csamlfsi-rg'
+
+  # Name of your Compute Cluster (needs to exist)
+  ml-compute-name: 'cpu-cluster'
+
+  # Name of your experiment for training tracking
+  ml-experiment-name: 'german-credit-basic-dev-ci'
+
+  # Model name for registration and its path in the repo
+  ml-model-name: 'german-credit-basic-model-dev'
+  ml-model-path: 'models/german-credit-basic'
+
+  # Desired model output name
+  ml-model-filename: 'credit-prediction.pkl'
+
+  # AKS cluster to deploy to (needs to exist)
+  ml-aks-cluster: 'aks-prod'
