@@ -20,6 +20,7 @@ steps:
     displayName: 'Attach to workspace'
     inputs:
       azureSubscription: $(ml_workspace_connection)
+      workingDirectory: $(ml_model_path)
       scriptType: 'bash'
       scriptLocation: 'inlineScript'
       inlineScript: |
