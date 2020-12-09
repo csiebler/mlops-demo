@@ -24,7 +24,6 @@ stages:
 
 - stage: TrainProd
   displayName: Train (Prod Stage)
-  dependsOn: Dev
   jobs:
     - template: template-train-and-register.yml
       parameters:
@@ -32,7 +31,6 @@ stages:
 
 - stage: DeployProd
   displayName: Deploy (Prod Stage)
-  dependsOn: Dev
   jobs:
     - template: template-deploy.yml
       parameters:
