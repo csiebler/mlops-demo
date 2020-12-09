@@ -1,8 +1,4 @@
-trigger:
-- master
-- main
-- release/*
-- feature/*
+trigger: none
 
 pool:
   vmImage: 'ubuntu-20.04'
