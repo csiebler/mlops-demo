@@ -1,0 +1,43 @@
+parameters:
+  variablesFile: ''
+
+jobs:
+- job: DeployModel
+  displayName: Deploy Model
+  variables:
+  - template: ${{ parameters.variablesFile }}
+  steps:
+    - task: AzureCLI@2
+      displayName: 'Install AML CLI'
+      inputs:
+        azureSubscription: ${{ variables.ml_workspace_connection }}
+        scriptLocation: 'inlineScript'
+        scriptType: 'bash'
+        inlineScript: |
+          az extension add -n azure-cli-ml
+
+    - task: AzureCLI@2
+      displayName: 'Attach to workspace'
+      inputs:
+        azureSubscription: ${{ variables.ml_workspace_connection }}
+        scriptLocation: 'inlineScript'
+        scriptType: 'bash'
+        workingDirectory: ${{ variables.ml_model_path }}
+        inlineScript: |
+          az ml folder attach -g ${{ variables.ml_workspace_rg }} -w ${{ variables.ml_workspace_name }}
+
+    - task: AzureCLI@2
+      displayName: 'Deploy model to AKS for Production'
+      inputs:
+        azureSubscription: ${{ variables.ml_workspace_connection }}
+        scriptLocation: inlineScript
+        scriptType: bash
+        workingDirectory: ${{ variables.ml_model_path }}
+        inlineScript: |
+          LATEST_VERSION=`az ml model list -n ${{ variables.ml_model_name }} --query '[0].version'`
+          az ml model deploy -n ${{ variables.ml_deployment_name }} \
+            --compute-target ${{ variables.ml_aks_cluster }} \
+            --model ${{ variables.ml_model_name }}:$LATEST_VERSION \
+            --inference-config-file config/inference-config.yml \
+            --deploy-config-file config/deployment-config-aks-prod.yml \
+            --overwrite

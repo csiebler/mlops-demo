@@ -21,3 +21,6 @@ variables:
 
   # AKS cluster to deploy to (needs to exist)
   ml_aks_cluster: 'aks-prod'
+
+  # Model deployment name
+  ml_deployment_name: 'german-credit-deployment-dev'
