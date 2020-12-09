@@ -8,7 +8,6 @@ pool:
   vmImage: 'ubuntu-latest'
 
 stages:
-
 - stage: Dev
   displayName: Dev Stage
   jobs:
@@ -18,9 +17,9 @@ stages:
     - template: template-deploy.yml
       parameters:
         variablesFile: german-credit-config-dev.yml
-
 - stage: Prod
   displayName: Prod Stage
+  dependsOn: Dev
   jobs:
     - template: template-train-and-register.yml
       parameters:
