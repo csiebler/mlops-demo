@@ -1,0 +1,57 @@
+parameters:
+  variablesFile: ''
+
+jobs:
+- job: TrainAndRegister
+  displayName: Train and Register Model
+  variables:
+  - template: ${{ parameters.variablesFile }}
+  steps:
+    - task: AzureCLI@2
+      displayName: 'Install AML CLI'
+      inputs:
+        azureSubscription: ${{ variables.ml_workspace_connection }}
+        scriptType: 'bash'
+        scriptLocation: 'inlineScript'
+        inlineScript: |
+          az extension add -n azure-cli-ml
+
+    - task: AzureCLI@2
+      displayName: 'Attach to workspace'
+      inputs:
+        azureSubscription: ${{ variables.ml_workspace_connection }}
+        scriptType: 'bash'
+        scriptLocation: 'inlineScript'
+        workingDirectory: ${{ variables.ml_model_path }}
+        inlineScript: |
+          az ml folder attach -g ${{ variables.ml_workspace_rg }} -w ${{ variables.ml_workspace_name }}
+
+    - task: AzureCLI@2
+      displayName: 'Train and explain model'
+      inputs:
+        azureSubscription: ${{ variables.ml_workspace_connection }}
+        scriptType: 'bash'
+        scriptLocation: 'inlineScript'
+        workingDirectory: ${{ variables.ml_model_path }}
+        inlineScript: |
+          az ml run submit-script \
+          --run-configuration-name config/train-amlcompute \
+          --target ${{ variables.ml_compute_name }} \
+          --experiment-name ${{ variables.ml_experiment_name }} \
+          --output-metadata-file $(Build.ArtifactStagingDirectory)/run.json
+
+    - task: AzureCLI@2
+      displayName: 'Register model'
+      inputs:
+        azureSubscription: ${{ variables.ml_workspace_connection }}
+        scriptType: 'bash'
+        scriptLocation: 'inlineScript'
+        workingDirectory: ${{ variables.ml_model_path }}
+        inlineScript: |
+          az ml model register \
+          --name ${{ variables.ml_model_name }} \
+          --asset-path outputs/${{ variables.ml_model_filename }} \
+          --run-metadata-file $(Build.ArtifactStagingDirectory)/run.json \
+          --output-metadata-file $(Build.ArtifactStagingDirectory)/model.json \
+          --property git-repo-url=$(Build.Repository.Uri) \
+          --property git-commit-id=$(Build.SourceVersion)
