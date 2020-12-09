@@ -4,13 +4,13 @@ variables:
 trigger: none
 
 pool:
-  vmImage: 'ubuntu-latest'
+  vmImage: 'ubuntu-20.04'
 
 steps:
   - task: AzureCLI@2
     displayName: 'Install AML CLI'
     inputs:
-      azureSubscription: $(ml-workspace-connection)
+      azureSubscription: $(ml_workspace_connection)
       scriptType: 'bash'
       scriptLocation: 'inlineScript'
       inlineScript: |
@@ -19,23 +19,23 @@ steps:
   - task: AzureCLI@2
     displayName: 'Attach to workspace'
     inputs:
-      azureSubscription: $(ml-workspace-connection)
+      azureSubscription: $(ml_workspace_connection)
       scriptType: 'bash'
       scriptLocation: 'inlineScript'
       inlineScript: |
-        az ml folder attach -g $(ml-workspace-rg) -w $(ml-workspace-name)
+        az ml folder attach -g $(ml_workspace_rg) -w $(ml_workspace_name)
 
   - task: AzureCLI@2
     displayName: 'Deploy model to ACI for QA'
     inputs:
-      azureSubscription: $(ml-workspace-connection)
-      workingDirectory: $(ml-model-path)
+      azureSubscription: $(ml_workspace_connection)
+      workingDirectory: $(ml_model_path)
       scriptLocation: inlineScript
       scriptType: bash
       inlineScript: |
-        LATEST_VERSION=`az ml model list -n $(ml-model-name) --query '[0].version'`
-        az ml model deploy -n german-credit-aci-qa \
-          --model $(ml-model-name):$LATEST_VERSION \
+        LATEST_VERSION=`az ml model list -n $(ml_model_name) --query '[0].version'`
+        az ml model deploy -n $(ml_deployment_name)-aci \
+          --model $(ml_model_name):$LATEST_VERSION \
           --inference-config-file config/inference-config.yml \
           --deploy-config-file config/deployment-config-aci-qa.yml \
           --overwrite
@@ -43,15 +43,15 @@ steps:
   - task: AzureCLI@2
     displayName: 'Deploy model to AKS for Production'
     inputs:
-      azureSubscription: $(ml-workspace-connection)
-      workingDirectory: $(ml-model-path)
+      azureSubscription: $(ml_workspace_connection)
+      workingDirectory: $(ml_model_path)
       scriptLocation: inlineScript
       scriptType: bash
       inlineScript: |
-        LATEST_VERSION=`az ml model list -n $(ml-model-name) --query '[0].version'`
-        az ml model deploy -n german-credit-aks-prod \
-          --compute-target $(ml-aks-cluster) \
-          --model $(ml-model-name):$LATEST_VERSION \
+        LATEST_VERSION=`az ml model list -n $(ml_model_name) --query '[0].version'`
+        az ml model deploy -n $(ml_deployment_name)-aks \
+          --compute-target $(ml_aks_cluster) \
+          --model $(ml_model_name):$LATEST_VERSION \
           --inference-config-file config/inference-config.yml \
           --deploy-config-file config/deployment-config-aks-prod.yml \
           --overwrite
