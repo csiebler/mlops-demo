@@ -1,5 +1,5 @@
 script: train.py
-arguments: [--DATASET_NAME, german_credit_dataset, --MODEL_NAME, credit-prediction.pkl]
+arguments: [--data_path, /data, --model_name, credit-prediction.pkl]
 target: local
 framework: Python
 communicator: None
@@ -14,3 +14,13 @@ environment:
     enabled: true
     baseImage: mcr.microsoft.com/azureml/base:intelmpi2018.3-ubuntu16.04
     arguments: []
+data:
+  training_dataset:
+    environmentVariableName: training_dataset
+    dataLocation:
+      dataset:
+        name: german_credit_file
+        version: 1
+    mechanism: download
+    pathOnCompute: /data
+    overwrite: true

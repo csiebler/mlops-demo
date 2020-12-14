@@ -6,19 +6,19 @@ We can fully run this example locally on our machine, while still logging the re
 
 Let's make sure we are in the model folder:
 
-```cli
+```console
 cd models/german-credit-basic
 ```
 
 Now, we can attach this local folder to the resource group with our Azure Machine Learning workspace:
 
-```cli
+```console
 az ml folder attach -g csamlfsi-rg -w csamlfsi-ws
 ```
 
 Next, we can run the `train.py` locally in a Docker container on our machine:
 
-```cli
+```console
 az ml run submit-script -c config/train-local -e german-credit-train-local
 ```
 
@@ -30,7 +30,7 @@ Finally, we can run this example directly on Azure Machine Learning compute by u
 
 To run the `train.py` on Azure Machine Learning compute, we just use the [`config/train-amlcompute.runconfig`](config/train-amlcompute.runconfig) configuration:
 
-```cli
+```console
 az ml run submit-script -c config/train-amlcompute -e german-credit-train-amlcompute -t run.json
 ```
 
@@ -40,7 +40,7 @@ This will do exactly the same as locally, but everything will happen in Azure. T
 
 Given the `run-metadata-file` from the experiment run, we can now register the model in AML. In this case, the `asset-path` points to the path structure within the experiment run:
 
-```cli
+```console
 az ml model register --name german-credit-basic-model --asset-path outputs/credit-prediction.pkl --run-metadata-file run.json
 ```
 
@@ -48,7 +48,7 @@ az ml model register --name german-credit-basic-model --asset-path outputs/credi
 
 We can deploy the model locally using Docker:
 
-```cli
+```console
 az ml model deploy --name german-credit-qa-local --model german-credit-basic-model:1 --inference-config-file config/inference-config.yml --deploy-config-file config/deployment-config-aci-qa.yml --runtime python --compute-type local --port 32000 --overwrite
 ```
 
@@ -77,7 +77,7 @@ Content-Type: application/json
 
 Once we know it is working, we can remove the local service via:
 
-```cli
+```console
 az ml service delete --name german-credit-qa-local
 ```
 
@@ -85,7 +85,7 @@ az ml service delete --name german-credit-qa-local
 
 Finally, we can deploy to Azure. First, we can try deploying to Azure Container Instances:
 
-```cli
+```console
 az ml model deploy -n german-credit-qa-aci --model german-credit-basic-model:1 --inference-config-file config/inference-config.yml --deploy-config-file config/deployment-config-aci-qa.yml --overwrite
 ```
 
@@ -114,6 +114,6 @@ Content-Type: application/json
 
 We can remove the ACI-based service via:
 
-```cli
+```console
 az ml service delete --name german-credit-qa-aci
 ```

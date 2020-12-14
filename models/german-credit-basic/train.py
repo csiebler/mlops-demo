@@ -2,49 +2,42 @@ import os
 import argparse
 import joblib
 import pandas as pd
-from azureml.core import Run
-from azureml.core import Dataset
+from azureml.core import Run, Dataset
 from sklearn.compose import ColumnTransformer
 from sklearn.impute import SimpleImputer
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
 from sklearn.pipeline import Pipeline
-from sklearn.preprocessing import LabelEncoder
-from sklearn.preprocessing import OneHotEncoder
-from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import LabelEncoder, OneHotEncoder, StandardScaler
 
-from azureml.contrib.interpret.explanation.explanation_client import ExplanationClient
-from azureml.explain.model.tabular_explainer import TabularExplainer
+from interpret.ext.blackbox import TabularExplainer
+from azureml.interpret import ExplanationClient
 
-
-def getRuntimeArgs():
+def get_runtime_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--MODEL_NAME', type=str)
-    parser.add_argument('--DATASET_NAME', type=str)
+    parser.add_argument('--model_name', type=str)
+    parser.add_argument('--data_path', type=str)
     args = parser.parse_args()
-    return args.MODEL_NAME, args.DATASET_NAME
+    return args
 
 def main():
-    model_name, dataset_name = getRuntimeArgs()
+    args = get_runtime_args()
 
-    run = Run.get_context()
-
-    dataset = Dataset.get_by_name(workspace=run.experiment.workspace, name=dataset_name)
-    credit_data_df = dataset.to_pandas_dataframe()
-
-    clf = model_train(credit_data_df, run)
+    df = pd.read_csv(os.path.join(args.data_path, 'german_credit_data.csv'))
+    clf = model_train(df)
 
     #copying model to "outputs" directory, this will automatically upload it to Azure ML
     output_dir = './outputs/'
     os.makedirs(output_dir, exist_ok=True)
-    joblib.dump(value=clf, filename=output_dir+model_name)
+    joblib.dump(value=clf, filename=os.path.join(output_dir, args.model_name))
 
-def model_train(ds_df, run):
+def model_train(df):
+    run = Run.get_context()
 
-    ds_df.drop("Sno", axis=1, inplace=True)
+    df.drop("Sno", axis=1, inplace=True)
 
-    y_raw = ds_df['Risk']
-    X_raw = ds_df.drop('Risk', axis=1)
+    y_raw = df['Risk']
+    X_raw = df.drop('Risk', axis=1)
 
     categorical_features = X_raw.select_dtypes(include=['object']).columns
     numeric_features = X_raw.select_dtypes(include=['int64', 'float']).columns
@@ -101,7 +94,7 @@ def model_train(ds_df, run):
     print('ranked global importance names: {}'.format(global_explanation.get_ranked_global_names()))
     # Feature ranks (based on original order of features)
     print('global importance rank: {}'.format(global_explanation.global_importance_rank))
-    
+      
     client = ExplanationClient.from_run(run)
     client.upload_model_explanation(global_explanation, comment='Global Explanation: All Features')
 

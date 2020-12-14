@@ -9,7 +9,8 @@ This gives a short, high-level overview of how this repo may be used.
 ### Interactive demo part
 
 1. If required, create an Azure Machine Learning workspace
-1. Create a tabular dataset from [`data/german_credit_data.csv`](data/german_credit_data.csv) (download the file to your machine and select `From Local File` when creating a new Dataset)
+1. Create a tabular dataset from [`data/german_credit_data.csv`](data/german_credit_data.csv) and name it `german_credit_dataset` (download the file to your machine and select `From Local File` when creating a new Dataset)
+1. Create a file dataset from [`data/german_credit_data.csv`](data/german_credit_data.csv) and name it `german_credit_file` (use `From Datastore` and point to the same file as in the prior step)
 1. Clone the whole repo into a Compute Instance
 1. Walk through the following notebooks
     * [`models/german-credit-basic/notebooks/german-credit-local.ipynb`](models/german-credit-basic/notebooks/german-credit-local.ipynb) - Shows how to run local training inside the Compute Instance, registers the model with data linage, and calculates the model explainability

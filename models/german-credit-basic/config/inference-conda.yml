@@ -3,13 +3,13 @@ channels:
   - conda-forge
   - defaults
 dependencies:
-- python=3.6.2
+- python=3.7.9
 - pip:
   # Azure ML
-  - azureml-defaults>=1.8.0
+  - azureml-defaults>=1.19.0
   - azureml-monitoring
+  - inference-schema
   # Other
   - scikit-learn==0.20.3
   - joblib==0.13.2
   - pandas==0.25.3
-  - inference-schema
