@@ -19,6 +19,8 @@ This gives a short, high-level overview of how this repo may be used.
 
 ### MLOps demo part
 
+#### Simple MLOps pipelines
+
 1. Create a new project in Azure DevOps
 1. Fork this repo or import it into Azure DevOps (so that you can make changes to the repo)
 1. Create a service connection to your Azure Machine Learning workspace and use the name `aml-workspace-connection`
@@ -27,6 +29,14 @@ This gives a short, high-level overview of how this repo may be used.
     * [`pipelines/german-credit-train-and-register.yml`](pipelines/german-credit-train-and-register.yml) - Trains and registers the model automatically
     * [`pipelines/german-credit-deploy.yml`](pipelines/german-credit-deploy.yml) - Deploys the trained model to ACI and AKS
 1. Run the pipelines
+
+#### Staged MLOps pipelines
+
+1. First, get the simple pipelines from [`pipelines/`](pipelines/) running
+1. Edit [`pipelines-staged/german-credit-config-dev.yml`](pipelines-staged/german-credit-config-dev.yml) and  [`pipelines-staged/german-credit-config-prod.yml`](pipelines-staged/german-credit-config-prod.yml) and adapt the values to point to your dev and prod workspaces
+1. Import the following pipeline into DevOps
+    * [`pipelines-staged/german-credit-rollout.yml`](pipelines-staged/german-credit-rollout.yml) - Trains, registers, and deploys the model automatically to a Dev environment, once successful, the same is repeated in a Prod environment
+1. Run the pipeline
 
 ## Conventions
 
