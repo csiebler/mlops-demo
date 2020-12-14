@@ -15,6 +15,7 @@ Now, we can attach this local folder to the resource group with our Azure Machin
 ```console
 az ml folder attach -g csamlfsi-rg -w csamlfsi-ws
 ```
+(`-w` refers to the workspace name and `-g` to the resource group of the workspace)
 
 Next, we can run the `train.py` locally in a Docker container on our machine:
 
