@@ -28,7 +28,7 @@ This gives a short, high-level overview of how this repo may be used.
 1. Edit [`pipelines/german-credit-config.yml`](pipelines/german-credit-config.yml) and adapt the values to point to your workspace
 1. Import the following pipelines into DevOps
     * [`pipelines/german-credit-train-and-register.yml`](pipelines/german-credit-train-and-register.yml) - Trains and registers the model automatically
-    * [`pipelines/german-credit-deploy.yml`](pipelines/german-credit-deploy.yml) - Deploys the trained model to ACI and AKS
+    * [`pipelines/german-credit-deploy.yml`](pipelines/german-credit-deploy.yml) - Deploys the trained model to AKS
 1. Run the pipelines
 
 #### Staged MLOps pipelines
@@ -54,8 +54,7 @@ models
         train.py (entry file for training)
         score.py (entry file for scoring)
         \- config
-            deployment-config-aci-qa.yml - QA deployment infrastructure definition (e.g., ACI configuration)
-            deployment-config-aks-prod.yml - Production deployment infrastructure definition (e.g., AKS configuration)
+            deployment-config-aks.yml - Deployment infrastructure definition (e.g., AKS configuration)
             inference-conda.yml - Conda environement definition for inferencing/scoring
             inference-config.yml - Azure Machine Learning config for inferencing
             train-conda.yml - Conda environement definition for training
