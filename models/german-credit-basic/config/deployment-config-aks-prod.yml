@@ -16,7 +16,7 @@ authEnabled: True
 tokenAuthEnabled: False
 
 appInsightsEnabled: True
-sslEnabled: False
+sslEnabled: True
 
 dataCollection:
   storageEnabled: True
