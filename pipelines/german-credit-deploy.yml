@@ -26,23 +26,23 @@ steps:
       inlineScript: |
         az ml folder attach -g $(ml_workspace_rg) -w $(ml_workspace_name)
 
-  - task: AzureCLI@2
-    displayName: 'Deploy model to ACI for QA'
-    inputs:
-      azureSubscription: $(ml_workspace_connection)
-      workingDirectory: $(ml_model_path)
-      scriptLocation: inlineScript
-      scriptType: bash
-      inlineScript: |
-        LATEST_VERSION=`az ml model list -n $(ml_model_name) --query '[0].version'`
-        az ml model deploy -n $(ml_deployment_name)-aci \
-          --model $(ml_model_name):$LATEST_VERSION \
-          --inference-config-file config/inference-config.yml \
-          --deploy-config-file config/deployment-config-aci-qa.yml \
-          --overwrite
+  # - task: AzureCLI@2
+  #   displayName: 'Deploy model to ACI for QA'
+  #   inputs:
+  #     azureSubscription: $(ml_workspace_connection)
+  #     workingDirectory: $(ml_model_path)
+  #     scriptLocation: inlineScript
+  #     scriptType: bash
+  #     inlineScript: |
+  #       LATEST_VERSION=`az ml model list -n $(ml_model_name) --query '[0].version'`
+  #       az ml model deploy -n $(ml_deployment_name)-aci \
+  #         --model $(ml_model_name):$LATEST_VERSION \
+  #         --inference-config-file config/inference-config.yml \
+  #         --deploy-config-file config/deployment-config-aci-qa.yml \
+  #         --overwrite
 
   - task: AzureCLI@2
-    displayName: 'Deploy model to AKS for Production'
+    displayName: 'Deploy model to AKS'
     inputs:
       azureSubscription: $(ml_workspace_connection)
       workingDirectory: $(ml_model_path)
