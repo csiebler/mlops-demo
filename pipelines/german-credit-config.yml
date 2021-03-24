@@ -20,7 +20,7 @@ variables:
   ml_model_filename: 'credit-prediction.pkl'
 
   # AKS cluster to deploy to (needs to exist)
-  ml_aks_cluster: 'aks-prod'
+  ml_aks_cluster: 'aks-dev'
 
   # Model deployment name
   ml_deployment_name: 'german-credit-deployment'
