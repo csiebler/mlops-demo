@@ -39,5 +39,5 @@ jobs:
             --compute-target ${{ variables.ml_aks_cluster }} \
             --model ${{ variables.ml_model_name }}:$LATEST_VERSION \
             --inference-config-file config/inference-config.yml \
-            --deploy-config-file config/deployment-config-aks-prod.yml \
+            --deploy-config-file config/deployment-config-aks.yml \
             --overwrite
