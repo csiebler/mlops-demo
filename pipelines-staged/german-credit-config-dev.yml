@@ -1,10 +1,10 @@
 variables:
   # Name of your Azure DevOps service connection to your AML workspace
-  ml_workspace_connection: 'aml-workspace-connection'
+  ml_workspace_connection: 'aml-workspace-dev'
 
   # Name of your AML workspace and its resource group
-  ml_workspace_name: 'csamlfsi-ws'
-  ml_workspace_rg: 'csamlfsi-rg'
+  ml_workspace_name: 'aml-fsi-demo-dev'
+  ml_workspace_rg: 'aml-fsi-demo-dev'
 
   # Name of your Compute Cluster (needs to exist)
   ml_compute_name: 'cpu-cluster'
