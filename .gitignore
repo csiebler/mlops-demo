@@ -5,10 +5,14 @@ __pycache__/
 
 .vscode/
 
-# AML Specific
+# AML/notebooks specific
 model.json
 run.json
 .azureml/
+.ipynb_aml_checkpoints/
+explanation/
+*.amltmp
+model.pkl
 
 # C extensions
 *.so
