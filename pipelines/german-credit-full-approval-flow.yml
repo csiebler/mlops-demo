@@ -43,7 +43,7 @@ stages:
             --run-configuration-name config/train-amlcompute \
             --target $(ml_compute_name) \
             --experiment-name $(ml_experiment_name) \
-            --output-metadata-file $(Build.ArtifactStagingDirectory)/run.json
+            --output-metadata-file run.json
 
       - task: AzureCLI@2
         displayName: 'Register model'
@@ -56,17 +56,17 @@ stages:
             az ml model register \
             --name $(ml_model_name) \
             --asset-path outputs/$(ml_model_filename) \
-            --run-metadata-file $(Build.ArtifactStagingDirectory)/run.json \
-            --output-metadata-file $(Build.ArtifactStagingDirectory)/model.json \
+            --run-metadata-file run.json \
+            --output-metadata-file model.json \
             --property git-repo-url=$(Build.Repository.Uri) \
             --property git-commit-id=$(Build.SourceVersion)
 
       - task: CopyFiles@2
         inputs:
           SourceFolder: $(ml_model_path)
-          TargetFolder: $(Build.ArtifactStagingDirectory
+          TargetFolder: $(Build.ArtifactStagingDirectory)
 
-      - publish: $(Build.ArtifactStagingDirectory
+      - publish: $(Build.ArtifactStagingDirectory)
         artifact: model_drop
 
 - stage: DeployModel
