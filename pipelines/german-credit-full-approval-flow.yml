@@ -96,7 +96,7 @@ stages:
         azureSubscription: $(ml_workspace_connection)
         scriptType: 'bash'
         scriptLocation: 'inlineScript'
-        workingDirectory: $(Pipeline.Workspace)
+        workingDirectory: $(Pipeline.Workspace)/model_drop
         inlineScript: |
           az ml folder attach -g $(ml_workspace_rg) -w $(ml_workspace_name)
 
@@ -104,7 +104,7 @@ stages:
       displayName: 'Deploy model to AKS'
       inputs:
         azureSubscription: $(ml_workspace_connection)
-        workingDirectory: $(Pipeline.Workspace)
+        workingDirectory: $(Pipeline.Workspace)/model_drop
         scriptLocation: inlineScript
         scriptType: bash
         inlineScript: |
