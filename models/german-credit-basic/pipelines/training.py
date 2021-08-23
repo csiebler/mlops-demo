@@ -1,7 +1,7 @@
 import os
 import azureml.core
 from azureml.core import Workspace, Dataset, RunConfiguration, Environment
-from azureml.pipeline.core import Pipeline, PipelineParameter
+from azureml.pipeline.core import Pipeline, PipelineDraft, PipelineParameter
 from azureml.pipeline.steps import PythonScriptStep
 from azureml.data.dataset_consumption_config import DatasetConsumptionConfig
 
@@ -36,15 +36,32 @@ train_step = PythonScriptStep(name="train-step",
                         allow_reuse=False)
 
 steps = [train_step]
-
 print('Creating, validating and publishing pipeline')
 pipeline = Pipeline(workspace=ws, steps=steps)
 pipeline.validate()
-published_pipeline = pipeline.publish(name='credit-training-pipeline',
-                                      version=os.getenv('BUILD_BUILDNUMBER'),
-                                      description={'repo': os.getenv('BUILD_REPOSITORY_URI'),
+pipeline_draft = PipelineDraft.create(workspace=ws,
+                                      name='credit-training-pipeline',
+                                      experiment_name='credit-training-pipeline-ci',
+                                      pipeline=pipeline,
+                                      continue_on_step_failure=True,
+                                      tags={'repo': os.getenv('BUILD_REPOSITORY_URI'),
                                                    'branch': os.getenv('BUILD_SOURCEBRANCH'), 
-                                                   'commit': os.getenv('BUILD_SOURCEVERSION')})
+                                                   'commit': os.getenv('BUILD_SOURCEVERSION'),
+                                                   'build_id': os.getenv('BUILD_BUILDNUMBER')},
+                                      properties={'repo': os.getenv('BUILD_REPOSITORY_URI'),
+                                                   'branch': os.getenv('BUILD_SOURCEBRANCH'), 
+                                                   'commit': os.getenv('BUILD_SOURCEVERSION'),
+                                                   'build_id': os.getenv('BUILD_BUILDNUMBER')}
+                                      )
+
+
+published_pipeline = pipeline_draft.publish()
+
+# published_pipeline = pipeline.publish(name='credit-training-pipeline',
+#                                       version=os.getenv('BUILD_BUILDNUMBER'),
+#                                       description={'repo': os.getenv('BUILD_REPOSITORY_URI'),
+#                                                    'branch': os.getenv('BUILD_SOURCEBRANCH'), 
+#                                                    'commit': os.getenv('BUILD_SOURCEVERSION')})
 
 # Output pipeline_id in specified format which will convert it to a variable in Azure DevOps
 print(f'##vso[task.setvariable variable=pipeline_id]{published_pipeline.id}')
