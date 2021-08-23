@@ -1,0 +1,9 @@
+steps:
+- task: AzureCLI@2
+  displayName: 'Install AML CLI'
+  inputs:
+    azureSubscription: $(ml_workspace_connection)
+    scriptType: 'bash'
+    scriptLocation: 'inlineScript'
+    inlineScript: |
+      az extension add -n azure-cli-ml

@@ -1,0 +1,16 @@
+steps:
+- task: AzureCLI@2
+  displayName: 'Deploy model to AKS'
+  inputs:
+    azureSubscription: $(ml_workspace_connection)
+    workingDirectory: $(Pipeline.Workspace)/model_drop
+    scriptLocation: inlineScript
+    scriptType: bash
+    inlineScript: |
+      ls -al
+      az ml model deploy -n $(ml_deployment_name) \
+        --model-metadata-file model.json \
+        --compute-target $(ml_aks_cluster) \
+        --inference-config-file config/inference-config.yml \
+        --deploy-config-file config/deployment-config-aks.yml \
+        --overwrite

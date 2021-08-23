@@ -1,0 +1,10 @@
+steps:
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: $(ml_model_path)
+    Contents: |
+      **/*
+      !.azureml/**/*
+    TargetFolder: $(Build.ArtifactStagingDirectory)
+- publish: $(Build.ArtifactStagingDirectory)
+  artifact: model_drop

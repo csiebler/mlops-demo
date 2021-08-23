@@ -1,0 +1,16 @@
+steps:
+- task: AzureCLI@2
+  displayName: 'Register model'
+  inputs:
+    azureSubscription: $(ml_workspace_connection)
+    scriptType: 'bash'
+    scriptLocation: 'inlineScript'
+    workingDirectory: $(ml_model_path)
+    inlineScript: |
+      az ml model register \
+      --name $(ml_model_name) \
+      --asset-path outputs/$(ml_model_filename) \
+      --run-metadata-file run.json \
+      --output-metadata-file model.json \
+      --property git-repo-url=$(Build.Repository.Uri) \
+      --property git-commit-id=$(Build.SourceVersion)
