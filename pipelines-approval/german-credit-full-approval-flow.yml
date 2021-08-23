@@ -12,11 +12,11 @@ stages:
   jobs:
   - job: TrainModel
     steps:
-    - template: template-install-aml-cli.yml
-    - template: template-connect-to-workspace.yml
-    - template: template-train-model.yml
-    - template: template-register-model.yml
-    - template: template-publish-artifacts.yml
+    - template: ../templates/install-aml-cli.yml
+    - template: ../templates/connect-to-workspace.yml
+    - template: ../templates/train-model.yml
+    - template: ../templates/register-model.yml
+    - template: ../templates/publish-artifacts.yml
 
 - stage: DeployModel
   displayName: Deploy model
@@ -30,14 +30,7 @@ stages:
       runOnce:
         deploy:
           steps:
-          - template: template-download-artifacts.yml
-          - template: template-install-aml-cli.yml
-          - template: template-connect-to-workspace.yml
-          - template: template-deploy-model.yml
-
-  # - job: DeployModel
-  #   steps:
-  #   - template: template-download-artifacts.yml
-  #   - template: template-install-aml-cli.yml
-  #   - template: template-connect-to-workspace.yml
-  #   - template: template-deploy-model.yml
+          - template: ../templates/download-artifacts.yml
+          - template: ../templates/install-aml-cli.yml
+          - template: ../templates/connect-to-workspace.yml
+          - template: ../templates/deploy-model.yml
