@@ -1,0 +1,16 @@
+
+steps:
+- task: UsePythonVersion@0
+  displayName: 'Setting Python version'
+  inputs:
+    versionSpec: '3.6'
+- task: AzureCLI@2
+  displayName: 'Install AML SDK'
+  inputs:
+    azureSubscription: $(ml_workspace_connection)
+    scriptType: 'bash'
+    scriptLocation: 'inlineScript'
+    inlineScript: |
+      python --version
+      pip install --upgrade azureml-sdk
+      pip install azure-cli

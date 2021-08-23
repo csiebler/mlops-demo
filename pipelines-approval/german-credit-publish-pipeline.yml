@@ -1,0 +1,18 @@
+variables: 
+ - template: german-credit-config.yml
+
+trigger: none
+
+pool:
+  vmImage: 'ubuntu-20.04'
+
+stages:
+- stage: TrainModel
+  displayName: Train & register model
+  jobs:
+  - job: TrainModel
+    steps:
+    - template: ../templates/install-aml-cli.yml
+    - template: ../templates/install-aml-sdk.yml
+    - template: ../templates/connect-to-workspace.yml
+    - template: ../templates/deploy-pipeline.yml
