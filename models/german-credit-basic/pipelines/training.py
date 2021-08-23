@@ -39,24 +39,26 @@ steps = [train_step]
 print('Creating, validating and publishing pipeline')
 pipeline = Pipeline(workspace=ws, steps=steps)
 pipeline.validate()
-pipeline_draft = PipelineDraft.create(workspace=ws,
-                                      name='credit-training-pipeline',
-                                      experiment_name='credit-training-pipeline-ci',
-                                      pipeline=pipeline,
-                                      continue_on_step_failure=True,
+# pipeline_draft = PipelineDraft.create(workspace=ws,
+#                                       name='credit-training-pipeline',
+#                                       experiment_name='credit-training-pipeline-ci',
+#                                       pipeline=pipeline,
+#                                       continue_on_step_failure=True,
+
+#                                       properties={'repo': os.getenv('BUILD_REPOSITORY_URI'),
+#                                                    'branch': os.getenv('BUILD_SOURCEBRANCH'), 
+#                                                    'commit': os.getenv('BUILD_SOURCEVERSION'),
+#                                                    'build_id': os.getenv('BUILD_BUILDNUMBER')}
+#                                       )
+# published_pipeline = pipeline_draft.publish()
+
+published_pipeline = pipeline.publish(name='credit-training-pipeline',
                                       tags={'repo': os.getenv('BUILD_REPOSITORY_URI'),
-                                                   'branch': os.getenv('BUILD_SOURCEBRANCH'), 
-                                                   'commit': os.getenv('BUILD_SOURCEVERSION'),
-                                                   'build_id': os.getenv('BUILD_BUILDNUMBER')},
-                                      properties={'repo': os.getenv('BUILD_REPOSITORY_URI'),
-                                                   'branch': os.getenv('BUILD_SOURCEBRANCH'), 
-                                                   'commit': os.getenv('BUILD_SOURCEVERSION'),
-                                                   'build_id': os.getenv('BUILD_BUILDNUMBER')}
+                                            'branch': os.getenv('BUILD_SOURCEBRANCH'), 
+                                            'commit': os.getenv('BUILD_SOURCEVERSION'),
+                                            'build_id': os.getenv('BUILD_BUILDNUMBER')}
                                       )
-
-
-published_pipeline = pipeline_draft.publish()
-
+)
 # published_pipeline = pipeline.publish(name='credit-training-pipeline',
 #                                       version=os.getenv('BUILD_BUILDNUMBER'),
 #                                       description={'repo': os.getenv('BUILD_REPOSITORY_URI'),
