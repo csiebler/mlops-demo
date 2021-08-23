@@ -1,5 +1,6 @@
 steps:
 - task: CopyFiles@2
+  displayName: Copy model source & metadata
   inputs:
     SourceFolder: $(ml_model_path)
     Contents: |
@@ -7,4 +8,5 @@ steps:
       !.azureml/**/*
     TargetFolder: $(Build.ArtifactStagingDirectory)
 - publish: $(Build.ArtifactStagingDirectory)
+  displayName: Publish model source & metadata
   artifact: model_drop

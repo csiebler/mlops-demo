@@ -21,9 +21,21 @@ stages:
 - stage: DeployModel
   displayName: Deploy model
   jobs:
-  - job: DeployModel
-    steps:
-    - template: template-download-artifacts.yml
-    - template: template-install-aml-cli.yml
-    - template: template-connect-to-workspace.yml
-    - template: template-deploy-model.yml
+  - deployment: DeployModel
+    displayName: Deploy Model to AKS
+    environment: model-production
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - template: template-download-artifacts.yml
+          - template: template-install-aml-cli.yml
+          - template: template-connect-to-workspace.yml
+          - template: template-deploy-model.yml
+
+  # - job: DeployModel
+  #   steps:
+  #   - template: template-download-artifacts.yml
+  #   - template: template-install-aml-cli.yml
+  #   - template: template-connect-to-workspace.yml
+  #   - template: template-deploy-model.yml
