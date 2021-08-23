@@ -39,7 +39,9 @@ register_step = PythonScriptStep(name="register-step",
                         runconfig=runconfig,
                         source_directory='pipelines/',
                         script_name='register.py',
-                        arguments=['--model_name', 'credit-model-ci', '--model_path', 'outputs/credit-prediction.pkl'],
+                        arguments=['--model_name', 'credit-model-ci', '--model_path', 'outputs/credit-prediction.pkl',
+                                   '--repo', os.getenv('BUILD_REPOSITORY_URI'), '--branch', os.getenv('BUILD_SOURCEBRANCH'),
+                                   '--commit', os.getenv('BUILD_SOURCEVERSION'), '--build_id', os.getenv("BUILD_BUILDNUMBER")],
                         compute_target='cpu-cluster',
                         allow_reuse=False)
 
@@ -50,7 +52,7 @@ print('Creating, validating and publishing pipeline')
 pipeline = Pipeline(workspace=ws, steps=steps)
 pipeline.validate()
 published_pipeline = pipeline.publish(name='credit-training-pipeline',
-                                      description=f'Published pipeline from build: {os.getenv("BUILD_BUILDURI")}')
+                                      description=f'Published pipeline from build id {os.getenv("BUILD_BUILDNUMBER")}')
 
 # Output pipeline_id in specified format which will convert it to a variable in Azure DevOps
 print(f'##vso[task.setvariable variable=pipeline_id]{published_pipeline.id}')
