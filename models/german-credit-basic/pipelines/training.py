@@ -50,7 +50,7 @@ print('Creating, validating and publishing pipeline')
 pipeline = Pipeline(workspace=ws, steps=steps)
 pipeline.validate()
 published_pipeline = pipeline.publish(name='credit-training-pipeline',
-                                      description=f'Published from build {os.getenv("BUILD_BUILDNUMBER")}')
+                                      description=f'Published pipeline from build: {os.getenv("BUILD_BUILDURI")}')
 
 # Output pipeline_id in specified format which will convert it to a variable in Azure DevOps
 print(f'##vso[task.setvariable variable=pipeline_id]{published_pipeline.id}')

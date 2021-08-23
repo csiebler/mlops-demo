@@ -6,10 +6,10 @@ dependencies:
 - python=3.7.9
 - pip:
   # Azure ML
-  - azureml-defaults>=1.19.0
-  - azureml-monitoring
-  - inference-schema
+  - azureml-defaults>=1.33.0
+  - azureml-sdk>=1.33.0
+  - azureml-interpret>=1.33.0
   # Other
-  - scikit-learn==0.20.3
-  - joblib==0.13.2
-  - pandas==1.2.3
+  - scikit-learn==0.24.1
+  - joblib==1.0.0
+  - pandas==1.2.1
