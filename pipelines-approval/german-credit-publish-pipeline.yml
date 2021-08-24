@@ -7,8 +7,8 @@ pool:
   vmImage: ubuntu-20.04
 
 stages:
-- stage: TrainModel
-  displayName: Train & register model
+- stage: DeployTrainingPipeline
+  displayName: Deploy model training pipeline
   jobs:
   - job: TrainModel
     steps:
