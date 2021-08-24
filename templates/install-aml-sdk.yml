@@ -8,8 +8,8 @@ steps:
   displayName: 'Install AML SDK'
   inputs:
     azureSubscription: $(ml_workspace_connection)
-    scriptType: 'bash'
-    scriptLocation: 'inlineScript'
+    scriptType: bash
+    scriptLocation: inlineScript
     inlineScript: |
       python --version
       pip install --upgrade azureml-sdk

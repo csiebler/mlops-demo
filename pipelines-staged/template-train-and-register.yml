@@ -11,8 +11,8 @@ jobs:
       displayName: 'Install AML CLI'
       inputs:
         azureSubscription: ${{ variables.ml_workspace_connection }}
-        scriptType: 'bash'
-        scriptLocation: 'inlineScript'
+        scriptType: bash
+        scriptLocation: inlineScript
         inlineScript: |
           az extension add -n azure-cli-ml
 
@@ -20,8 +20,8 @@ jobs:
       displayName: 'Attach to workspace'
       inputs:
         azureSubscription: ${{ variables.ml_workspace_connection }}
-        scriptType: 'bash'
-        scriptLocation: 'inlineScript'
+        scriptType: bash
+        scriptLocation: inlineScript
         workingDirectory: ${{ variables.ml_model_path }}
         inlineScript: |
           az ml folder attach -g ${{ variables.ml_workspace_rg }} -w ${{ variables.ml_workspace_name }}
@@ -30,8 +30,8 @@ jobs:
       displayName: 'Train and explain model'
       inputs:
         azureSubscription: ${{ variables.ml_workspace_connection }}
-        scriptType: 'bash'
-        scriptLocation: 'inlineScript'
+        scriptType: bash
+        scriptLocation: inlineScript
         workingDirectory: ${{ variables.ml_model_path }}
         inlineScript: |
           az ml run submit-script \
@@ -44,8 +44,8 @@ jobs:
       displayName: 'Register model'
       inputs:
         azureSubscription: ${{ variables.ml_workspace_connection }}
-        scriptType: 'bash'
-        scriptLocation: 'inlineScript'
+        scriptType: bash
+        scriptLocation: inlineScript
         workingDirectory: ${{ variables.ml_model_path }}
         inlineScript: |
           az ml model register \

@@ -3,8 +3,8 @@ steps:
   displayName: 'Register model'
   inputs:
     azureSubscription: $(ml_workspace_connection)
-    scriptType: 'bash'
-    scriptLocation: 'inlineScript'
+    scriptType: bash
+    scriptLocation: inlineScript
     workingDirectory: $(ml_model_path)
     inlineScript: |
       az ml model register \

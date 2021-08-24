@@ -4,15 +4,15 @@ variables:
 trigger: none
 
 pool:
-  vmImage: 'ubuntu-20.04'
+  vmImage: ubuntu-20.04
 
 steps:
   - task: AzureCLI@2
     displayName: 'Install AML CLI'
     inputs:
       azureSubscription: $(ml_workspace_connection)
-      scriptType: 'bash'
-      scriptLocation: 'inlineScript'
+      scriptType: bash
+      scriptLocation: inlineScript
       inlineScript: |
         az extension add -n azure-cli-ml
 
@@ -20,8 +20,8 @@ steps:
     displayName: 'Attach to workspace'
     inputs:
       azureSubscription: $(ml_workspace_connection)
-      scriptType: 'bash'
-      scriptLocation: 'inlineScript'
+      scriptType: bash
+      scriptLocation: inlineScript
       workingDirectory: $(ml_model_path)
       inlineScript: |
         az ml folder attach -g $(ml_workspace_rg) -w $(ml_workspace_name)
@@ -30,8 +30,8 @@ steps:
     displayName: 'Train and explain model'
     inputs:
       azureSubscription: $(ml_workspace_connection)
-      scriptType: 'bash'
-      scriptLocation: 'inlineScript'
+      scriptType: bash
+      scriptLocation: inlineScript
       workingDirectory: $(ml_model_path)
       inlineScript: |
         az ml run submit-script \
@@ -44,8 +44,8 @@ steps:
     displayName: 'Register model'
     inputs:
       azureSubscription: $(ml_workspace_connection)
-      scriptType: 'bash'
-      scriptLocation: 'inlineScript'
+      scriptType: bash
+      scriptLocation: inlineScript
       workingDirectory: $(ml_model_path)
       inlineScript: |
         az ml model register \
