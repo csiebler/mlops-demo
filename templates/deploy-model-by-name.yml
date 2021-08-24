@@ -9,7 +9,7 @@ steps:
     inlineScript: |
       ls -al
       az ml model deploy -n $(ml_deployment_name) \
-        --model-metadata-file model.json \
+        --model $(ml_model_name):$(ml_model_version) \
         --compute-target $(ml_aks_cluster) \
         --inference-config-file config/inference-config.yml \
         --deploy-config-file config/deployment-config-aks.yml \

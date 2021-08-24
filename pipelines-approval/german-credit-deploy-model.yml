@@ -1,0 +1,25 @@
+variables: 
+ - template: german-credit-config.yml
+
+trigger: none
+
+pool:
+  vmImage: 'ubuntu-20.04'
+
+stages:
+- stage: DeployModel
+  displayName: Deploy model
+  jobs:
+  - deployment: DeployModel
+    displayName: Deploy Model to AKS
+    environment: model-production
+    variables:
+      ml_model_name: credit-model-ci
+      ml_model_version: 4
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - template: ../templates/install-aml-cli.yml
+          - template: ../templates/connect-to-workspace.yml
+          - template: ../templates/deploy-model-by-name.yml
