@@ -8,7 +8,7 @@ dependencies:
   # Azure ML
   - azureml-defaults>=1.33.0
   - azureml-sdk>=1.33.0
-  - azureml-interpret>=1.33.0
+  - inference-schema
   # Other
   - scikit-learn==0.24.1
   - joblib==1.0.0
