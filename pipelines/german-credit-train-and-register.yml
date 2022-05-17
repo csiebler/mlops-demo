@@ -26,5 +26,5 @@ steps:
       workingDirectory: $(ml_model_path)
       inlineScript: |
         run_id=`az ml job create --file azureml/train.yml  | jq .name -r`
-        echo $run_id
-        az ml model create --name $(ml_model_name) --path runs:/$run_id/outputs
+        echo "run_id: $run_id"
+        az ml model create --name $(ml_model_name) --path "runs:/${run_id}/outputs"
