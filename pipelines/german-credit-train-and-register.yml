@@ -18,22 +18,12 @@ steps:
         az configure --defaults group=$(ml_workspace_rg) workspace=$(ml_workspace_name) location=$(ml_workspace_region)
 
   - task: AzureCLI@2
-    displayName: 'Train and explain model'
+    displayName: 'Train, explain and register model'
     inputs:
       azureSubscription: $(ml_workspace_connection)
       scriptType: bash
       scriptLocation: inlineScript
       workingDirectory: $(ml_model_path)
       inlineScript: |
-        az ml job create --file azureml/train.yml --stream
-
-  - task: AzureCLI@2
-    displayName: 'Register model'
-    inputs:
-      azureSubscription: $(ml_workspace_connection)
-      scriptType: bash
-      scriptLocation: inlineScript
-      workingDirectory: $(ml_model_path)
-      inlineScript: |
+        run_id=`az ml job create --file azureml/train.yml  | jq .name -r`
         az ml model create --name $(ml_model_name) --path runs:/$run_id/output
-
