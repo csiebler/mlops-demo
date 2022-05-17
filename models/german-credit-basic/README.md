@@ -1,5 +1,12 @@
 # Running this code from your machine
 
+**Documentation needs to be updated for AzureML CLI v2!**
+
+
+```console
+az ml model create -n german-credit-basic-model -p runs:/$run_id/output
+```
+
 ## Running this code locally using Azure Machine Learning in Docker
 
 We can fully run this example locally on our machine, while still logging the results to Azure Machine Learning.

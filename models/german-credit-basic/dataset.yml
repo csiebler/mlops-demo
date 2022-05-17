@@ -1,0 +1,6 @@
+
+$schema: https://azuremlschemas.azureedge.net/latest/data.schema.json
+name: german-credit-demo-v2
+description: Sample dataset for German Credit sample
+type: uri_folder
+path: azureml://datastores/datasets/paths/german-credit-uci/

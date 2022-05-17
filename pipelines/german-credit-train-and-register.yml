@@ -8,23 +8,14 @@ pool:
 
 steps:
   - task: AzureCLI@2
-    displayName: 'Install AML CLI'
+    displayName: 'Configure AML CLI v2'
     inputs:
       azureSubscription: $(ml_workspace_connection)
       scriptType: bash
       scriptLocation: inlineScript
       inlineScript: |
-        az extension add -n azure-cli-ml
-
-  - task: AzureCLI@2
-    displayName: 'Attach to workspace'
-    inputs:
-      azureSubscription: $(ml_workspace_connection)
-      scriptType: bash
-      scriptLocation: inlineScript
-      workingDirectory: $(ml_model_path)
-      inlineScript: |
-        az ml folder attach -g $(ml_workspace_rg) -w $(ml_workspace_name)
+        az extension add -n ml -y
+        az configure --defaults group=$(ml_workspace_rg) workspace=$(ml_workspace_name) location=$(ml_workspace_region)
 
   - task: AzureCLI@2
     displayName: 'Train and explain model'
@@ -34,11 +25,7 @@ steps:
       scriptLocation: inlineScript
       workingDirectory: $(ml_model_path)
       inlineScript: |
-        az ml run submit-script \
-        --run-configuration-name config/train-amlcompute \
-        --target $(ml_compute_name) \
-        --experiment-name $(ml_experiment_name) \
-        --output-metadata-file $(Build.ArtifactStagingDirectory)/run.json
+        az ml job create --file train.yml --stream
 
   - task: AzureCLI@2
     displayName: 'Register model'
@@ -48,10 +35,5 @@ steps:
       scriptLocation: inlineScript
       workingDirectory: $(ml_model_path)
       inlineScript: |
-        az ml model register \
-        --name $(ml_model_name) \
-        --asset-path outputs/$(ml_model_filename) \
-        --run-metadata-file $(Build.ArtifactStagingDirectory)/run.json \
-        --output-metadata-file $(Build.ArtifactStagingDirectory)/model.json \
-        --property git-repo-url=$(Build.Repository.Uri) \
-        --property git-commit-id=$(Build.SourceVersion)
+        az ml model create -n $(ml_model_name) -p runs:/$run_id/output
+

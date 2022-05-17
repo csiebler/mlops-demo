@@ -1,0 +1,5 @@
+$schema: https://azuremlschemas.azureedge.net/latest/environment.schema.json
+name: german-credit-demo-env
+image: mcr.microsoft.com/azureml/openmpi3.1.2-ubuntu18.04
+conda_file: config/conda.yml
+description: Demo environment for German Credit example

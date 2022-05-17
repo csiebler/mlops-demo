@@ -1,0 +1,13 @@
+$schema: https://azuremlschemas.azureedge.net/latest/managedOnlineDeployment.schema.json
+name: dev
+endpoint_name: german-credit-endpoint-v2
+model: azureml:german-credit-basic-model@latest
+code_configuration:
+  code: ./
+  scoring_script: score.py
+environment: azureml:german-credit-demo-env@latest
+environment_variables:
+  AML_MODEL_DC_STORAGE_ENABLED: 'true'
+instance_type: Standard_DS2_v2
+instance_count: 1
+app_insights_enabled: true

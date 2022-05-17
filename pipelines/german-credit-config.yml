@@ -5,6 +5,7 @@ variables:
   # Name of your AML workspace and its resource group
   ml_workspace_name: 'aml-fsi-demo-dev'
   ml_workspace_rg: 'aml-fsi-demo-dev'
+  ml_workspace_region: 'westeurope'
 
   # Name of your Compute Cluster (needs to exist)
   ml_compute_name: 'cpu-cluster'

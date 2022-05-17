@@ -2,7 +2,7 @@ import os
 import argparse
 import joblib
 import pandas as pd
-from azureml.core import Run, Dataset
+from azureml.core import Run
 from sklearn.compose import ColumnTransformer
 from sklearn.impute import SimpleImputer
 from sklearn.linear_model import LogisticRegression
