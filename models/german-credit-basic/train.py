@@ -15,7 +15,6 @@ from azureml.interpret import ExplanationClient
 
 def get_runtime_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--model_name', type=str)
     parser.add_argument('--data_path', type=str)
     args = parser.parse_args()
     return args
@@ -29,7 +28,7 @@ def main():
     #copying model to "outputs" directory, this will automatically upload it to Azure ML
     output_dir = './outputs/'
     os.makedirs(output_dir, exist_ok=True)
-    joblib.dump(value=clf, filename=os.path.join(output_dir, args.model_name))
+    joblib.dump(value=clf, filename=os.path.join(output_dir, 'model.pkl'))
 
 def model_train(df):
     run = Run.get_context()

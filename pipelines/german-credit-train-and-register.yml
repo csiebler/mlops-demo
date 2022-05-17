@@ -25,7 +25,7 @@ steps:
       scriptLocation: inlineScript
       workingDirectory: $(ml_model_path)
       inlineScript: |
-        az ml job create --file train.yml --stream
+        az ml job create --file azureml/train.yml --stream
 
   - task: AzureCLI@2
     displayName: 'Register model'
@@ -35,5 +35,5 @@ steps:
       scriptLocation: inlineScript
       workingDirectory: $(ml_model_path)
       inlineScript: |
-        az ml model create -n $(ml_model_name) -p runs:/$run_id/output
+        az ml model create --name $(ml_model_name) --path runs:/$run_id/output
 

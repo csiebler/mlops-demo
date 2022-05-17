@@ -25,7 +25,7 @@ def init():
     # Load model
     global model
     model_dir = os.getenv('AZUREML_MODEL_DIR')
-    model_path = os.path.join(model_dir, 'credit-prediction.pkl')
+    model_path = os.path.join(model_dir, 'model.pkl')
     model = joblib.load(model_path)
 
     # Setup Data Collection

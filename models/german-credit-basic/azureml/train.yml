@@ -1,8 +1,8 @@
 $schema: https://azuremlschemas.azureedge.net/latest/commandJob.schema.json
 command: |
   ls -R ${{inputs.training_data}}
-  python train.py --data_path ${{inputs.training_data}} --model_name credit-prediction.pkl
-code: ./
+  python train.py --data_path ${{inputs.training_data}}
+code: ../
 inputs:
   training_data:
     path: azureml:german-credit-demo-v2@latest
