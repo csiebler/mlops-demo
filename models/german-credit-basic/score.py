@@ -25,6 +25,10 @@ def init():
     # Load model
     global model
     model_dir = os.getenv('AZUREML_MODEL_DIR')
+    
+    import glob
+    print(glob.glob(f"{model_dir}/*"))
+    
     model_path = os.path.join(model_dir, 'model.pkl')
     model = joblib.load(model_path)
 
