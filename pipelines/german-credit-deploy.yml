@@ -25,5 +25,5 @@ steps:
       scriptLocation: inlineScript
       scriptType: bash
       inlineScript: |
-        az ml online-endpoint create --name $ml_endpoint_name
-        #az ml online-deployment create --endpoint-name $ml_endpoint_name --name $ml_deployment_name --file azureml/deployment.yml
+        az ml online-endpoint create --name $(ml_endpoint_name)
+        az ml online-deployment create --endpoint-name $(ml_endpoint_name) --name $(ml_deployment_name) --file azureml/deployment.yml
