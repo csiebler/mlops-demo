@@ -29,7 +29,7 @@ def init():
     import glob
     print(glob.glob(f"{model_dir}/*"))
     
-    model_path = os.path.join(model_dir, 'model.pkl')
+    model_path = os.path.join(model_dir, 'outputs/model.pkl')
     model = joblib.load(model_path)
 
     # Setup Data Collection
