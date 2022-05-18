@@ -3,7 +3,6 @@ experiment_name: german-credit-training
 environment: azureml:german-credit-demo-env@latest
 compute: azureml:cpu-cluster
 command: |
-  ls -R ${{inputs.training_data}}
   python train.py --data_path ${{inputs.training_data}}
 code: ../
 inputs:

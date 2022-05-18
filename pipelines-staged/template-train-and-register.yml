@@ -50,7 +50,7 @@ jobs:
         inlineScript: |
           az ml model register \
           --name ${{ variables.ml_model_name }} \
-          --asset-path outputs/${{ variables.ml_model_filename }} \
+          --asset-path outputs/model.pkl \
           --run-metadata-file $(Build.ArtifactStagingDirectory)/run.json \
           --output-metadata-file $(Build.ArtifactStagingDirectory)/model.json \
           --property git-repo-url=$(Build.Repository.Uri) \

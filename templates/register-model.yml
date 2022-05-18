@@ -9,7 +9,7 @@ steps:
     inlineScript: |
       az ml model register \
       --name $(ml_model_name) \
-      --asset-path outputs/$(ml_model_filename) \
+      --asset-path outputs/model.pkl \
       --run-metadata-file run.json \
       --output-metadata-file model.json \
       --property git-repo-url=$(Build.Repository.Uri) \

@@ -1,6 +1,4 @@
 $schema: https://azuremlschemas.azureedge.net/latest/managedOnlineDeployment.schema.json
-name: dev
-endpoint_name: german-credit-endpoint-v2
 model: azureml:german-credit-basic-model@latest
 code_configuration:
   code: ../

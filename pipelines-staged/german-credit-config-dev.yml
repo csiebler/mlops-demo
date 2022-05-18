@@ -16,9 +16,6 @@ variables:
   ml_model_name: 'german-credit-basic-model-dev'
   ml_model_path: 'models/german-credit-basic'
 
-  # Desired model output name
-  ml_model_filename: 'credit-prediction.pkl'
-
   # AKS cluster to deploy to (needs to exist)
   ml_aks_cluster: 'aks-dev'
 
