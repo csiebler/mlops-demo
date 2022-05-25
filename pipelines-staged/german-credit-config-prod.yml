@@ -15,5 +15,5 @@ variables:
   ml_model_path: models/german-credit-basic
 
   # Model deployment
-  ml_endpoint_name: german-credit-endpoint
+  ml_endpoint_name: german-credit-endpoint-prod
   ml_deployment_name: prod
