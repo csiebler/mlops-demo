@@ -1,0 +1,19 @@
+trigger: none
+
+pool:
+  vmImage: ubuntu-20.04
+
+stages:
+- stage: SetupDev
+  displayName: Setup (Dev Stage)
+  jobs:
+    - template: template-setup.yml
+      parameters:
+        variablesFile: german-credit-config-dev.yml
+
+- stage: SetupProd
+  displayName: Setup (Prod Stage)
+  jobs:
+    - template: template-setup.yml
+      parameters:
+        variablesFile: german-credit-config-prod.yml

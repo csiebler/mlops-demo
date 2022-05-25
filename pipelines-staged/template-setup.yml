@@ -16,14 +16,33 @@ jobs:
         inlineScript: |
           az extension add -n ml -y
           az configure --defaults group=${{ variables.ml_workspace_rg }} workspace=${{ variables.ml_workspace_name }} location=${{ variables.ml_workspace_region }}
-
+          
     - task: AzureCLI@2
-      displayName: 'Deploy model as Managed Online Endpoint'
+      displayName: 'Create compute cluster'
       inputs:
         azureSubscription: ${{ variables.ml_workspace_connection }}
         workingDirectory: ${{ variables.ml_model_path }}
         scriptLocation: inlineScript
         scriptType: bash
         inlineScript: |
-          az ml online-endpoint create --name ${{ ml_endpoint_name }}
-          az ml online-deployment create --endpoint-name ${{ ml_endpoint_name }} --name ${{ ml_deployment_name }} --file azureml/deployment.yml
+          az ml compute create --file azureml/compute.yml
+
+    - task: AzureCLI@2
+      displayName: 'Create dataset for demo'
+      inputs:
+        azureSubscription: ${{ variables.ml_workspace_connection }}
+        workingDirectory: ${{ variables.ml_model_path }}
+        scriptLocation: inlineScript
+        scriptType: bash
+        inlineScript: |
+          az ml data create --file azureml/dataset.yml
+
+    - task: AzureCLI@2
+      displayName: 'Create environment'
+      inputs:
+        azureSubscription: ${{ variables.ml_workspace_connection }}
+        workingDirectory: ${{ variables.ml_model_path }}
+        scriptLocation: inlineScript
+        scriptType: bash
+        inlineScript: |
+          az ml environment create --file azureml/environment.yml
