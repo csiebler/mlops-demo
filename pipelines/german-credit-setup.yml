@@ -1,0 +1,38 @@
+variables: 
+ - template: german-credit-config.yml
+
+trigger: none
+
+pool:
+  vmImage: ubuntu-20.04
+
+steps:
+  - task: AzureCLI@2
+    displayName: 'Configure AML CLI v2'
+    inputs:
+      azureSubscription: $(ml_workspace_connection)
+      scriptType: bash
+      scriptLocation: inlineScript
+      inlineScript: |
+        az extension add -n ml -y
+        az configure --defaults group=$(ml_workspace_rg) workspace=$(ml_workspace_name) location=$(ml_workspace_region)
+
+  - task: AzureCLI@2
+    displayName: 'Create compute cluster'
+    inputs:
+      azureSubscription: $(ml_workspace_connection)
+      workingDirectory: $(ml_model_path)
+      scriptLocation: inlineScript
+      scriptType: bash
+      inlineScript: |
+        az ml compute create --file azureml/compute.yml
+
+  - task: AzureCLI@2
+    displayName: 'Create dataset for demo'
+    inputs:
+      azureSubscription: $(ml_workspace_connection)
+      workingDirectory: $(ml_model_path)
+      scriptLocation: inlineScript
+      scriptType: bash
+      inlineScript: |
+        az ml data create --file azureml/dataset.yml

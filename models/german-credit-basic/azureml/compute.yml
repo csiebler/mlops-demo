@@ -1,0 +1,9 @@
+$schema: https://azuremlschemas.azureedge.net/latest/amlCompute.schema.json 
+name: cpu-cluster
+type: amlcompute
+size: STANDARD_DS3_v2
+min_instances: 0
+max_instances: 1
+idle_time_before_scale_down: 1800
+identity:
+  type: system_assigned
