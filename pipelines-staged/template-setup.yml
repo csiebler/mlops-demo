@@ -2,8 +2,8 @@ parameters:
   variablesFile: ''
 
 jobs:
-- job: DeployModel
-  displayName: Deploy Model
+- job: SetupWorkspace
+  displayName: Setup workspace
   variables:
   - template: ${{ parameters.variablesFile }}
   steps:
