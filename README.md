@@ -10,6 +10,7 @@ This gives a short, high-level overview of how this repo may be used.
 
 #### Simple MLOps pipelines
 
+1. If required, create a new Azure Machine Learning workspace
 1. Create a new project in Azure DevOps
 1. Fork this repo or import it into Azure DevOps (so that you can make changes to the repo)
 1. Create a service connection to your Azure Machine Learning workspace and use the name `aml-workspace-connection`
@@ -32,7 +33,6 @@ This gives a short, high-level overview of how this repo may be used.
 
 ### Interactive demo part
 
-1. If required, create an Azure Machine Learning workspace
 1. Create a tabular dataset from [`data/german_credit_data.csv`](data/german_credit_data.csv) and name it `german_credit_dataset` (download the file to your machine and select `From Local File` when creating a new Dataset)
 1. Create a file dataset from [`data/german_credit_data.csv`](data/german_credit_data.csv) and name it `german_credit_file` (use `From Datastore` and point to the same file as in the prior step)
 1. Clone the whole repo into a Compute Instance
@@ -57,45 +57,20 @@ models
     \- model1
         train.py (entry file for training)
         score.py (entry file for scoring)
-        \- config
-            deployment-config-aks.yml - Deployment infrastructure definition (e.g., AKS configuration)
-            inference-conda.yml - Conda environement definition for inferencing/scoring
-            inference-config.yml - Azure Machine Learning config for inferencing
-            train-conda.yml - Conda environement definition for training
+        \- azureml
+            compute.yml - Deployment infrastructure definition (e.g., AKS configuration)
+            conda.yml - Conda environment definition for training and deployment
+            dataset.yml - Dataset registration for demo purposes
+            deployment.yml - AzureML Managed Online Deployment definition
+            environment.yml - AzureML environement definition
+            train.yml - Training configuration YAML file
     \- model2
         ...same file and folder structure...
 ```
 
 ## Testing
 
-This snipped can be used to manually showcase/test the deployed model: 
-
-```python
-import requests
-import json
-
-url = '<scoring url>'
-key = '<api key>'
-
-test_data = {
-  'data': [{
-    "Age": 20,
-    "Sex": "male",
-    "Job": 0,
-    "Housing": "own",
-    "Saving accounts": "little",
-    "Checking account": "little",
-    "Credit amount": 100,
-    "Duration": 48,
-    "Purpose": "radio/TV"
-  }]
-}
-
-headers = {'Content-Type': 'application/json', 'Authorization': 'Bearer ' + key}
-resp = requests.post(url, json=test_data, headers=headers)
-
-print("Prediction (good, bad):", resp.text)
-```
+You can test the deployed model directly from the Azure Machine Learning Studio UI by going to `Endpoints -> german-credit-endpoint -> Test`
 
 ## Further Work
 
