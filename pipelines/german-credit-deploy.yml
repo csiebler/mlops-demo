@@ -18,7 +18,7 @@ steps:
         az configure --defaults group=$(ml_workspace_rg) workspace=$(ml_workspace_name) location=$(ml_workspace_region)
 
   - task: AzureCLI@2
-    displayName: 'Deploy model as Managed Endpoint'
+    displayName: 'Deploy model as Managed Online Endpoint'
     inputs:
       azureSubscription: $(ml_workspace_connection)
       workingDirectory: $(ml_model_path)

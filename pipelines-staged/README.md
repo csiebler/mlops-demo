@@ -12,5 +12,3 @@ This enables the following flow, where a model is trained, tested and deployed i
 * Prod Stage (after Dev Stage completed successfully)
   * Train and register model (in Prod environment)
   * Deploy model (in Prod environment)
-
-
