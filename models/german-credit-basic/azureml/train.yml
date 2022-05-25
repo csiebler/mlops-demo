@@ -7,4 +7,4 @@ command: |
 code: ../
 inputs:
   training_data:
-    path: azureml:german-credit-demo-v2@latest
+    path: azureml:german-credit-demo@latest
