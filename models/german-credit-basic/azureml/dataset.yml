@@ -1,5 +1,5 @@
 $schema: https://azuremlschemas.azureedge.net/latest/asset.schema.json
-name: german-credit-demo
+name: german-credit
 version: 1
 path: ../../../data/
 description: Sample dataset for German Credit sample
