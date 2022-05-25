@@ -22,9 +22,9 @@ jobs:
       displayName: 'Train, explain and register model'
       inputs:
         azureSubscription: ${{ variables.ml_workspace_connection }}
+        workingDirectory: ${{ variables.ml_model_path }}
         scriptType: bash
         scriptLocation: inlineScript
-        workingDirectory: ${{ variables.ml_model_path }}
         inlineScript: |
           job_name=`az ml job create --file azureml/train.yml --name ${{ variables.ml_experiment_name }} | jq .name -r`
           echo "Started job with job_name: $job_name"

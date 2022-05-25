@@ -1,6 +1,6 @@
 variables:
   # Name of your Azure DevOps service connection to your AML workspace
-  ml_workspace_connection: aml-workspace-dev
+  ml_workspace_connection: aml-workspace-connection-prod
 
   # Details of your AML workspace
   ml_workspace_name: aml-fsi-demo-prod
