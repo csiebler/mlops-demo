@@ -26,4 +26,7 @@ jobs:
         scriptType: bash
         inlineScript: |
           az ml online-endpoint create --name ${{ variables.ml_endpoint_name }}
-          az ml online-deployment create --endpoint-name ${{ variables.ml_endpoint_name }} --name ${{ variables.ml_deployment_name }} --file azureml/deployment.yml
+          az ml online-deployment create --endpoint-name ${{ variables.ml_endpoint_name }} \
+                                         --name ${{ variables.ml_deployment_name }} \
+                                         --file azureml/deployment.yml \
+                                         --set model=azureml:${{ variables.ml_model_name }}@latest
