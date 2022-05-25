@@ -7,4 +7,4 @@ inputs:
     path: azureml:german-credit@latest
 compute: azureml:cpu-cluster
 environment: azureml:german-credit-demo-env@latest
-experiment_name: german-credit-training
+experiment_name: german-credit-basic-training
