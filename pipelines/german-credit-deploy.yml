@@ -25,6 +25,5 @@ steps:
       scriptLocation: inlineScript
       scriptType: bash
       inlineScript: |
-        az ml online-endpoint create --file azureml/endpoint.yml
         az ml online-deployment create --file azureml/deployment.yml \
                                        --set model=azureml:$(ml_model_name)@latest

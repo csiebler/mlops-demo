@@ -25,7 +25,7 @@ steps:
       scriptLocation: inlineScript
       workingDirectory: $(ml_model_path)
       inlineScript: |
-        job_name=`az ml job create --file azureml/train.yml --set experiment_name=$(ml_experiment_name) | jq .name -r`
+        job_name=`az ml job create --file azureml/train.yml | jq .name -r`
         echo "Started job with job_name: $job_name"
         az ml job stream --name $job_name
         az ml model create --name $(ml_model_name) --path runs:/$job_name/outputs

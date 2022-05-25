@@ -7,13 +7,9 @@ variables:
   ml_workspace_rg: aml-fsi-demo-prod
   ml_workspace_region: westeurope
 
-  # Name of your experiment for training tracking
-  ml_experiment_name: german-credit-basic-prod-ci
-
   # Model name for registration and its path in the repo
   ml_model_name: german-credit-basic-model-prod
   ml_model_path: models/german-credit-basic
 
   # Model deployment
-  ml_endpoint_name: german-credit-endpoint-prod
   ml_deployment_name: prod
