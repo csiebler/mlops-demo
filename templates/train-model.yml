@@ -7,8 +7,7 @@ steps:
     scriptLocation: inlineScript
     workingDirectory: $(ml_model_path)
     inlineScript: |
-      az ml run submit-script \
-      --run-configuration-name config/train-amlcompute \
-      --target $(ml_compute_name) \
-      --experiment-name $(ml_experiment_name) \
-      --output-metadata-file run.json
+      job_name=`az ml job create --file azureml/train.yml | jq .name -r`
+      echo "Started job with job_name: $job_name"
+      echo $job_name > job_name.txt
+      az ml job stream --name $job_name

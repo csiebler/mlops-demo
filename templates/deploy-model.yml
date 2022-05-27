@@ -1,6 +1,6 @@
 steps:
 - task: AzureCLI@2
-  displayName: 'Deploy model to AKS'
+  displayName: 'Deploy model to Managed Online Endpoint'
   inputs:
     azureSubscription: $(ml_workspace_connection)
     workingDirectory: $(ml_model_path)
@@ -8,9 +8,6 @@ steps:
     scriptType: bash
     inlineScript: |
       ls -al
-      az ml model deploy -n $(ml_deployment_name) \
-        --model-metadata-file model.json \
-        --compute-target $(ml_aks_cluster) \
-        --inference-config-file config/inference-config.yml \
-        --deploy-config-file config/deployment-config-aks.yml \
-        --overwrite
+      model_version=`cat model_version.txt`
+      az ml online-deployment create --file azureml/deployment.yml \
+                                --set model=azureml:$(ml_model_name):$model_version

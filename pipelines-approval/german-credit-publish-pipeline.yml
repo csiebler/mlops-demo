@@ -12,7 +12,6 @@ stages:
   jobs:
   - job: TrainModel
     steps:
-    - template: ../templates/install-aml-cli.yml
     - template: ../templates/install-aml-sdk.yml
-    - template: ../templates/connect-to-workspace.yml
+    - template: ../templates/configure-aml-cli.yml
     - template: ../templates/deploy-pipeline.yml

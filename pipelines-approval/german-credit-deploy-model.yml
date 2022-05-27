@@ -22,6 +22,5 @@ stages:
           steps:
           - checkout: self
           # TODO: Checkout commit from which registered model was trained on
-          - template: ../templates/install-aml-cli.yml
-          - template: ../templates/connect-to-workspace.yml
+          - template: ../templates/configure-aml-cli.yml
           - template: ../templates/deploy-model-by-name.yml

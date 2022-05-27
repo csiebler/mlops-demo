@@ -1,0 +1,10 @@
+steps:
+- task: AzureCLI@2
+  displayName: 'Configure AML CLI v2'
+  inputs:
+    azureSubscription: $(ml_workspace_connection)
+    scriptType: bash
+    scriptLocation: inlineScript
+    inlineScript: |
+      az extension add -n ml -y
+      az configure --defaults group=$(ml_workspace_rg) workspace=$(ml_workspace_name) location=$(ml_workspace_region)

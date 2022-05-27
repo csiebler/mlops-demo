@@ -12,8 +12,7 @@ stages:
   jobs:
   - job: TrainModel
     steps:
-    - template: ../templates/install-aml-cli.yml
-    - template: ../templates/connect-to-workspace.yml
+    - template: ../templates/configure-aml-cli.yml
     - template: ../templates/train-model.yml
     - template: ../templates/register-model.yml
     - template: ../templates/publish-artifacts.yml
@@ -22,7 +21,7 @@ stages:
   displayName: Deploy model
   jobs:
   - deployment: DeployModel
-    displayName: Deploy Model to AKS
+    displayName: Deploy Model to Managed Online Endpoint
     environment: model-production
     variables:
       ml_model_path: $(Pipeline.Workspace)/model_drop
@@ -31,6 +30,5 @@ stages:
         deploy:
           steps:
           - template: ../templates/download-artifacts.yml
-          - template: ../templates/install-aml-cli.yml
-          - template: ../templates/connect-to-workspace.yml
+          - template: ../templates/configure-aml-cli.yml
           - template: ../templates/deploy-model.yml

@@ -7,10 +7,7 @@ steps:
     scriptLocation: inlineScript
     workingDirectory: $(ml_model_path)
     inlineScript: |
-      az ml model register \
-      --name $(ml_model_name) \
-      --asset-path outputs/model.pkl \
-      --run-metadata-file run.json \
-      --output-metadata-file model.json \
-      --property git-repo-url=$(Build.Repository.Uri) \
-      --property git-commit-id=$(Build.SourceVersion)
+      job_name=`cat job_name.txt`
+      model_version=`az ml model create --name $(ml_model_name) --path runs:/$job_name/outputs | jq .version -r`
+      echo "Registered model version: $model_version"
+      echo $model_version > model_version.txt
