@@ -25,5 +25,12 @@ steps:
       scriptLocation: inlineScript
       scriptType: bash
       inlineScript: |
+        # Create endpoint if it doesn't exist yet
+        if [[ `az ml online-endpoint list -o tsv --query "[?name=='$(endpoint_name)'][name]" | wc -l` -ne 1 ]]; then
+          az ml online-endpoint create --name $(endpoint_name) --file azureml/endpoint.yml
+        else
+          echo "Endpoint $(endpoint_name) already exists"
+        fi
         az ml online-deployment create --file azureml/deployment.yml \
+                                       --endpoint-name $(endpoint_name) \
                                        --set model=azureml:$(ml_model_name)@latest

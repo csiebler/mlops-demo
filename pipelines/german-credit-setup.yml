@@ -46,13 +46,3 @@ steps:
       scriptType: bash
       inlineScript: |
         az ml environment create --file azureml/environment.yml
-        
-  - task: AzureCLI@2
-    displayName: 'Create deployment endpoint'
-    inputs:
-      azureSubscription: $(ml_workspace_connection)
-      workingDirectory: $(ml_model_path)
-      scriptLocation: inlineScript
-      scriptType: bash
-      inlineScript: |
-        az ml online-endpoint create --file azureml/endpoint.yml

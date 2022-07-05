@@ -7,6 +7,10 @@ variables:
   ml_workspace_rg: mlops-demo
   ml_workspace_region: westeurope
 
+
   # Model name for registration and its path in the repo
   ml_model_name: german-credit-basic-model
   ml_model_path: models/german-credit-basic
+
+  # Endpoint name for deployment
+  endpoint_name: german-credit-endpoint
